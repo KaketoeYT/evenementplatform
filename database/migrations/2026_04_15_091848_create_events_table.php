@@ -20,6 +20,9 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('entry_price', 10, 2);
             $table->string('');
+
+             $table->foreignId('id')->constrained()->onDelete('cascade');
+             $table->foreignId('id')->constrained()->onDelete('cascade');
         });
     }
 
