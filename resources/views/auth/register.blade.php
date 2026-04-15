@@ -17,6 +17,20 @@
                 <div>
                     <x-forms.input label="Email" name="email" type="email" placeholder="your@email.com" />
                 </div>
+                <!-- phonenumber Input -->
+                <div>
+                    <x-forms.input label="Phonenumber" name="phonenumber" type="tel" placeholder="+31 45642 11" />
+                </div>
+
+                <!-- Emergency contact Input -->
+                <div>
+                    <x-forms.input label="Emergency contact" name="emergency_contact" type="tel" placeholder="+31 56422 34" />
+                </div>
+
+                <!-- zipcode Input -->
+                <div>
+                    <x-forms.input label="Zipcode" name="zipcode" type="text" placeholder="3455XX" />
+                </div>
 
                 <!-- Password Input -->
                 <div>
