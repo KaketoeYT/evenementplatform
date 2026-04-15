@@ -26,12 +26,15 @@ class RegistrationController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'phonenumber' => ['required', 'string', 'max:255'],
             'emergency_contact' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'street' => ['required', 'string', 'max:255'],
             'zipcode' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
-        $validated['rol'] = 'user';
+        $validated['role'] = 'user';
 
         event(new Registered(($user = User::create($validated))));
 
