@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->event_id();
+            $table->id();
             $table->timestamps();
             $table->dateTime('datetime');
             $table->string('title');
             $table->integer('duration');
             $table->text('description');
             $table->decimal('entry_price', 10, 2);
-            $table->string('');
+            
 
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->foreignId('venue_id')->constrained()->onDelete('cascade');
