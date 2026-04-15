@@ -21,8 +21,8 @@ return new class extends Migration
             $table->decimal('entry_price', 10, 2);
             $table->string('');
 
-             $table->foreignId('id')->constrained()->onDelete('cascade');
-             $table->foreignId('id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('venue_id')->constrained()->onDelete('cascade');
         });
     }
 
