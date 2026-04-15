@@ -27,6 +27,21 @@
                     <x-forms.input label="Emergency contact" name="emergency_contact" type="tel" placeholder="+31 56422 34" />
                 </div>
 
+                <!-- City Input -->
+                <div>
+                    <x-forms.input label="City" name="city" type="text" placeholder="Amsterdam" />
+                </div>
+
+                <!-- Country Input -->
+                <div>
+                    <x-forms.input label="Country" name="country" type="text" placeholder="Netherlands" />
+                </div>
+
+                <!-- Street Input -->
+                <div>
+                    <x-forms.input label="Street" name="street" type="text" placeholder="Main Street 123" />
+                </div>
+
                 <!-- zipcode Input -->
                 <div>
                     <x-forms.input label="Zipcode" name="zipcode" type="text" placeholder="3455XX" />

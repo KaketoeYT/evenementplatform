@@ -25,6 +25,9 @@ class User extends Authenticatable
         'role',
         'phonenumber',
         'emergency_contact',
+        'city',
+        'country',
+        'street',
         'zipcode',
     ];
 
