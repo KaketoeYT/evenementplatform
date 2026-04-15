@@ -18,9 +18,9 @@ class Event extends Model
         'id'
     ];
 
-public function categorie()
+public function category()
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsTo(Category::class);
     }
 
     public function venue()
