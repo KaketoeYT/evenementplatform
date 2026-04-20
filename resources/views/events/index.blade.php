@@ -8,18 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-@endif
 
-    <style>
-        body {
-            background-color: #f5f5f7;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #262626;
-        }
+
 
 </head>
 
@@ -96,15 +86,7 @@
                                             <div class="text-muted small">From</div>
                                             <div class="price-text">€{{ number_format($event->entry_price, 2) }}</div>
                                         </div>
-                                    <form action="{{ route('tickets.ticketstore') }}" method="POST">
-                                        @csrf
-                                        <input type="hidden" name="event_id" value="{{ $event->id }}">
-                                        <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
-                                        <input type="hidden" name="rank" value="Standard">
-
-                                        <button type="submit" class="btn btn-primary btn-ticketmaster">
-                                            Find Tickets
-                                        </button>
+                                        
                                     </form>
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('events.show', $event->id) }}"
