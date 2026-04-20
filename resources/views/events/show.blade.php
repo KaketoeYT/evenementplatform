@@ -38,6 +38,7 @@
         <a href="{{ route('events.index') }}"
             class="inline-block mt-4 text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">
             ← Terug naar alle evenementen
+
         </a>
     </div>
 </x-base-layout>

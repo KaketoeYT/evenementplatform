@@ -1,3 +1,5 @@
+<x-base-layout>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -86,7 +88,6 @@
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('events.show', $event->id) }}"
                                                 class="btn btn-outline-secondary">Bekijk details</a>
-                                            <a href="#" class="btn btn-primary btn-ticketmaster">Find Tickets</a>
                                         </div>
                                     </div>
                                 </div>
@@ -98,6 +99,6 @@
         @endforeach
     </div>
 </body>
-
 </html>
+</x-base-layout>
 
