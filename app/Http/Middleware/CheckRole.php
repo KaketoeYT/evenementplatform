@@ -18,7 +18,7 @@ class CheckRole
         if (!auth()->check() || !in_array(auth()->user()->role, $roles)) { //heeft foutmeldingen maar werkt wel?
             return abort(403, 'Unauthorized action.');
         }
-
+        // Credit naar Michael Johannes Hidde Soonini Manz
         return $next($request);
     }
 }
