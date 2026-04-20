@@ -4,13 +4,19 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {return view('welcome');})->name('home');
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+route::get('events/create', [EventController::class, 'create'])->name('events.create');
+Route::post('events/store', [EventController::class, 'store'])->name('events.store');
+route::get('events/edit', [EventController::class, 'edit'])->name('events.edit');
+Route::post('events', [EventController::class, 'update'])->name('events.update');
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
 // Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');
 
@@ -23,4 +29,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', [Settings\AppearanceController::class, 'edit'])->name('settings.appearance.edit');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
