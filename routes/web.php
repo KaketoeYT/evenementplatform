@@ -11,6 +11,8 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+// Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', [Settings\ProfileController::class, 'edit'])->name('settings.profile.edit');
