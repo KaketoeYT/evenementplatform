@@ -64,7 +64,7 @@ class EventController extends Controller
 
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
-}
+
     public function ticketstore(Request $request)
     {
         // 1. Zoek het evenement en de bijbehorende venue
