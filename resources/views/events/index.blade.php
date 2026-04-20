@@ -1,3 +1,5 @@
+<x-base-layout>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,6 +104,6 @@
         @endforeach
     </div>
 </body>
-
 </html>
+</x-base-layout>
 
