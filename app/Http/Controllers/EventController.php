@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Event;
 use App\Models\Venue;
 use App\Http\Requests\EventStoreRequest;
+use App\Http\Requests\EventUpdateRequest;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -40,5 +41,19 @@ class EventController extends Controller
         Event::create($request->validated());
 
         return redirect()->route('events.index')->with('success', 'Event created successfully.');
+    }
+
+    public function edit(Event $event)
+    {
+        $categories = Category::all();
+        $venues = Venue::all();
+        return view ('events.edit', compact('event', 'venues', 'categories'));
+    }
+
+    public function update(EventUpdateRequest $request, Event $event)
+    {
+        $event->update($request->validated());
+
+        return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 }
