@@ -9,8 +9,17 @@ class EventController extends Controller
 {
     public function index()
     {
+        $eventsByCategory = Event::with('category', 'venue')
+            ->get()
+            ->groupBy(fn ($event) => $event->category->name ?? 'Uncategorized');
+
+        return view('events.index', compact('eventsByCategory'));
+    }
+
+    public function index_admin()
+    {
         $events = Event::with('category', 'venue')->get();
 
-        return view('events.index', compact('events'));
+        return view('events.index_admin', compact('events'));
     }
 }
