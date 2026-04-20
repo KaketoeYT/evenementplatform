@@ -1,15 +1,16 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', function () {return view('welcome');})->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', [Settings\ProfileController::class, 'edit'])->name('settings.profile.edit');

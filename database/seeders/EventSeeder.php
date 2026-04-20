@@ -42,25 +42,5 @@ class EventSeeder extends Seeder
             'category_id' => 3,
             'venue_id' => 3,
         ]);
-
-        Event::create([
-            'title' => 'Food Truck Festival',
-            'datetime' => Carbon::parse('2026-08-05 12:00:00'),
-            'duration' => 300,
-            'description' => 'Geniet van streetfood van top food trucks uit Europa.',
-            'entry_price' => 15.00,
-            'category_id' => 4,
-            'venue_id' => 4,
-        ]);
-
-        Event::create([
-            'title' => 'Esports Championship 2026',
-            'datetime' => Carbon::parse('2026-09-12 09:00:00'),
-            'duration' => 480,
-            'description' => 'Internationaal gaming toernooi met professionele teams.',
-            'entry_price' => 120.00,
-            'category_id' => 5,
-            'venue_id' => 5,
-        ]);
     }
 }
