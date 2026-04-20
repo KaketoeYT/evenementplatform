@@ -17,9 +17,23 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Create a single test user
+
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => 'user',
+            'email' => 'user@user.nl',
+            'role' => 'user',
+        ]);
+
+        User::factory()->create([
+            'name' => 'organ',
+            'email' => 'organ@organ.nl',
+            'role' => 'organizer',
+        ]);
+
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@admin.nl',
+            'role' => 'admin',
         ]);
 
         // Create categories and venues first

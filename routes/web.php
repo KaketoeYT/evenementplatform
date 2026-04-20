@@ -20,6 +20,8 @@ Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('event
 Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
 
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
+
 // Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');
 
 Route::middleware(['auth'])->group(function () {
@@ -31,4 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', [Settings\AppearanceController::class, 'edit'])->name('settings.appearance.edit');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
+require __DIR__.'/event.php';
+
+
