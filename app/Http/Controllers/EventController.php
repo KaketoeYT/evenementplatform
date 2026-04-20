@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -12,8 +13,12 @@ class EventController extends Controller
         $eventsByCategory = Event::with('category', 'venue')
             ->get()
             ->groupBy(fn ($event) => $event->category->name ?? 'Uncategorized');
+        
+        $myTickets = Ticket::with('event')
+            ->where('user_id', auth()->id())
+            ->get();
 
-        return view('events.index', compact('eventsByCategory'));
+        return view('events.index', compact('eventsByCategory', 'myTickets'));
     }
 
     public function index_admin()
