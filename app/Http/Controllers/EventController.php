@@ -18,8 +18,8 @@ class EventController extends Controller
     {
         $eventsByCategory = Event::with('category', 'venue')
             ->get()
-            ->groupBy(fn ($event) => $event->category->name ?? 'Uncategorized');
-        
+            ->groupBy(fn($event) => $event->category->name ?? 'Uncategorized');
+
         $myTickets = Ticket::with('event')
             ->where('user_id', auth()->id())
             ->get();
@@ -54,7 +54,7 @@ class EventController extends Controller
     {
         $categories = Category::all();
         $venues = Venue::all();
-        return view ('events.edit', compact('event', 'venues', 'categories'));
+        return view('events.edit', compact('event', 'venues', 'categories'));
     }
 
     public function update(EventUpdateRequest $request, Event $event)
@@ -64,11 +64,18 @@ class EventController extends Controller
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
     }
 
+    public function destroy(Event $event)
+    {
+        $event->delete();
+
+        return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
+    }
+
     public function ticketstore(Request $request)
     {
         // 1. Zoek het evenement en de bijbehorende venue
         $event = Event::with('venue')->findOrFail($request->event_id);
-        
+
         // 2. Tel hoeveel tickets er al zijn voor dit evenement
         $currentTicketsCount = $event->tickets()->count();
 
@@ -87,7 +94,7 @@ class EventController extends Controller
         $ticket->user_id = Auth::id(); // De ID van de ingelogde gebruiker
         $ticket->save();
 
-        
+
 
         // 3. Terugsturen met een succesmelding
         return redirect()->back()->with('success', 'Je plek is gereserveerd! Ticket: ' . $ticket->ticket_number);

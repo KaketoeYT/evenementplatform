@@ -23,6 +23,7 @@
                     <th>Created At</th>
                     <th>Updated At</th>
                     <th>edit</th>
+                    <th>delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,7 +39,14 @@
                     <td>{{ $event->venue->name ?? 'N/A' }}</td>
                     <td>{{ $event->created_at }}</td>
                     <td>{{ $event->updated_at }}</td>
-                    <td><a href="{{route('events.edit', $event->id)}}">bewerk</a></td>
+                    <td><a href="{{ route('events.edit', $event->id) }}">bewerk</a></td>
+                    <td>
+                        <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-link p-0 text-danger">verwijder</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
