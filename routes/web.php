@@ -12,6 +12,8 @@ Route::view('dashboard', 'dashboard')
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
+
 // Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');
 
 Route::middleware(['auth'])->group(function () {

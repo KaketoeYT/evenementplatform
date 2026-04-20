@@ -30,4 +30,9 @@ class Event extends Model
     {
         return $this->belongsTo(Venue::class);
     }
+
+    public function tickets() 
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }
