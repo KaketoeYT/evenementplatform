@@ -21,7 +21,8 @@
                     <th>Category</th>
                     <th>Venue</th>
                     <th>Created At</th>
-                    <th>Updated At</th>s
+                    <th>Updated At</th>
+                    <th>edit</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +38,7 @@
                     <td>{{ $event->venue->name ?? 'N/A' }}</td>
                     <td>{{ $event->created_at }}</td>
                     <td>{{ $event->updated_at }}</td>
+                    <td><a href="{{route('events.edit', $event->id)}}">bewerk</a></td>
                 </tr>
                 @endforeach
             </tbody>
