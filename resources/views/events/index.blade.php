@@ -7,92 +7,7 @@
     <title>Events | Ticketmaster Style</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f5f5f7;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            color: #262626;
-        }
 
-        /* Category Headers */
-        .category-header {
-            border-bottom: 1px solid #e0e0e0;
-            padding-bottom: 1rem;
-        }
-
-        /* Card Styling */
-        .event-card {
-            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-            border: 1px solid #e0e0e0 !important;
-            border-radius: 8px;
-        }
-
-        .event-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
-        }
-
-        /* Date Badge (Ticketmaster Signature style) */
-        .date-container {
-            text-transform: uppercase;
-            font-weight: 700;
-            line-height: 1;
-            color: #026cdf;
-        }
-
-        .date-day {
-            font-size: 1.25rem;
-        }
-
-        .date-month {
-            font-size: 0.85rem;
-        }
-
-        /* Typography */
-        .event-title {
-            font-weight: 700;
-            color: #262626;
-            font-size: 1.1rem;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            height: 2.6rem;
-        }
-
-        .venue-info {
-            font-size: 0.9rem;
-            color: #6f6f6f;
-            font-weight: 400;
-        }
-
-        /* Primary Button */
-        .btn-ticketmaster {
-            background-color: #026cdf;
-            border-color: #026cdf;
-            font-weight: 600;
-            padding: 0.5rem 1.5rem;
-            transition: background-color 0.2s;
-        }
-
-        .btn-ticketmaster:hover {
-            background-color: #014ea3;
-            border-color: #014ea3;
-        }
-
-        .price-text {
-            font-size: 0.95rem;
-            font-weight: 600;
-        }
-
-        .category-pill {
-            background-color: #eeeeee;
-            color: #444;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-    </style>
 </head>
 
 <body>
@@ -168,7 +83,11 @@
                                             <div class="text-muted small">From</div>
                                             <div class="price-text">€{{ number_format($event->entry_price, 2) }}</div>
                                         </div>
-                                        <a href="#" class="btn btn-primary btn-ticketmaster">Find Tickets</a>
+                                        <div class="d-flex gap-2">
+                                            <a href="{{ route('events.show', $event->id) }}"
+                                                class="btn btn-outline-secondary">Bekijk details</a>
+                                            <a href="#" class="btn btn-primary btn-ticketmaster">Find Tickets</a>
+                                        </div>
                                     </div>
                                 </div>
                             </article>
