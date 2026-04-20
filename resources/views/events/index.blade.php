@@ -10,6 +10,9 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
+
+
+
 </head>
 
 <body>
@@ -85,6 +88,8 @@
                                             <div class="text-muted small">From</div>
                                             <div class="price-text">€{{ number_format($event->entry_price, 2) }}</div>
                                         </div>
+                                        
+                                    </form>
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('events.show', $event->id) }}"
                                                 class="btn btn-outline-secondary">Bekijk details</a>

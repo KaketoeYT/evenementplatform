@@ -4,14 +4,24 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {return view('welcome');})->name('home');
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+// organisor 
+Route::get('events/create', [EventController::class, 'create'])->name('events.create');
+Route::post('events/store', [EventController::class, 'store'])->name('events.store');
+Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
+Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
+
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
+
 // Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');
 
 Route::middleware(['auth'])->group(function () {

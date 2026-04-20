@@ -11,6 +11,10 @@ class Event extends Model
 
     //protected $primaryKey = 'event_id';
 
+    protected $casts = [
+        'datetime' => 'datetime',
+    ];
+
     protected $fillable = [
         'datetime',
         'title',
@@ -29,5 +33,10 @@ class Event extends Model
     public function venue()
     {
         return $this->belongsTo(Venue::class);
+    }
+
+    public function tickets() 
+    {
+        return $this->hasMany(Ticket::class);
     }
 }
