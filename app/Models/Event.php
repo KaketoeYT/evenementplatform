@@ -11,6 +11,10 @@ class Event extends Model
 
     //protected $primaryKey = 'event_id';
 
+    protected $casts = [
+        'datetime' => 'datetime',
+    ];
+
     protected $fillable = [
         'datetime',
         'title',
