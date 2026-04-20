@@ -8,7 +8,6 @@ use App\Models\Venue;
 use App\Http\Requests\EventStoreRequest;
 use App\Http\Requests\EventUpdateRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Event;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
