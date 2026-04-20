@@ -15,8 +15,12 @@ class EventController extends Controller
         $eventsByCategory = Event::with('category', 'venue')
             ->get()
             ->groupBy(fn ($event) => $event->category->name ?? 'Uncategorized');
+        
+        $myTickets = Ticket::with('event')
+            ->where('user_id', auth()->id())
+            ->get();
 
-        return view('events.index', compact('eventsByCategory'));
+        return view('events.index', compact('eventsByCategory', 'myTickets'));
     }
 
     public function index_admin()
@@ -53,5 +57,9 @@ class EventController extends Controller
 
         // 3. Terugsturen met een succesmelding
         return redirect()->back()->with('success', 'Je plek is gereserveerd! Ticket: ' . $ticket->ticket_number);
+    }
+    public function show(Event $event)
+    {
+        return view('events.show', compact('event'));
     }
 }
