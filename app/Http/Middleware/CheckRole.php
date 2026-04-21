@@ -8,17 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CheckRole
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response //...$roles maakt van admin:admin,worker een array ['admin', 'worker']
+    public function handle(Request $request, Closure $next,  ...$roles): Response //...$roles maakt van admin:admin,worker een array ['admin', 'worker']
     {
-        if (!auth()->check() || !in_array(auth()->user()->role, $roles)) { //heeft foutmeldingen maar werkt wel?
+        if (!auth()->check() || !in_array(auth()->user()->role, $roles)) {
             return abort(403, 'Unauthorized action.');
         }
-        // Credit naar Michael Johannes Hidde Soonini Manz
+
         return $next($request);
     }
 }

@@ -12,20 +12,6 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-// organisor 
-Route::get('events/create', [EventController::class, 'create'])->name('events.create');
-Route::post('events/store', [EventController::class, 'store'])->name('events.store');
-Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
-Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
-Route::put('events/{event}/delete', [EventController::class, 'delete'])->name('events.delete');
-
-Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
-
-
-// Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');
-
 Route::middleware(['auth'])->group(function () {
     Route::get('settings/profile', [Settings\ProfileController::class, 'edit'])->name('settings.profile.edit');
     Route::put('settings/profile', [Settings\ProfileController::class, 'update'])->name('settings.profile.update');
