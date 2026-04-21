@@ -9,6 +9,7 @@ Route::get('/events/{event}', [EventController::class, 'show'])->name('events.sh
 // Routes for every inlogged user.
 Route::middleware(['auth'])->group(function () {
     Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
+    Route::post('/event/afmelden', [EventController::class, 'afmelden'])->name('event.afmelden');
 });
 
 // Routes ONLY for user user.
