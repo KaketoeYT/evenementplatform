@@ -1,49 +1,96 @@
-Bezoekers (niet ingelogd):
+		Story Review
 
-· Als bezoeker, wil ik een lijst van openstaande opdrachten kunnen zien.
 
-· Als bezoeker, wil ik opdrachten kunnen filteren op categorie.
+User Stories: Evenementenplatform
 
-· Als bezoeker, wil ik een view pagina en een overzicht pagina over alle opdrachten kunnen zien.
+Als organisator wil ik aanmeldingen sluiten zodat ik controle houd
+Criteria: Staat los van capaciteit
+Melding: “Aanmelding gesloten”
 
-· Als bezoeker, wil ik kunnen registreren als freelancer of opdrachtgever
 
-Freelancer (ingelogd):
+Als organisator wil ik iemand handmatig afmelden zodat ik fouten kan corrigeren
+Criteria: Reden optioneel
+Wachtlijst wordt geactiveerd
 
-· Als freelancer, wil ik op een opdracht kunnen reageren met een offerte.
+Als beheerder wil ik organisatoraccounts beheren zodat de juiste mensen toegang hebben
+Criteria: Rollen worden toegewezen
+Accounts activeren/deactiveren
+Wachtwoord reset mogelijk
 
-· Als freelancer, wil ik mijn eigen offertes kunnen zien en de status ervan (in behandeling/ geaccepteerd/ afgewezen).
+Als beheerder wil ik rapportages zien zodat ik inzicht heb in gebruik
+Criteria: Totaal evenementen
+Totaal aanmeldingen
+Populairste evenement
+Filterbaar op periode
 
-· Als freelancer, wil ik een overzicht over mijn ingediende offertes kunnen zien.
+Als ontwikkelaar wil ik bevestigingsmails versturen zodat deelnemers bewijs hebben
+Criteria: Via Laravel Mail
+Bevat naam, datum en locatie
+Ook bij wachtlijst-doorschuiving
 
-· Als freelancer, wil ik profiel aanmaken en mijn vaardigheden toevoegen.
 
-· Als freelancer, wil ik mijn profiel kunnen aanpassen om te updaten.
+Als deelnemer wil ik me afmelden voor een evenement zodat de plek beschikbaar wordt voor anderen
+Criteria: Afmelden mogelijk tot de deadline
+Na deadline geblokkeerd
+Vrijgekomen plek gaat naar de wachtlijst
+Ayaz fib num: 3
 
-· Als freelancer, wil ik mijn gegevens kunnen aanpassen.
 
-· Als freelancer wil ik reviews kunnen ontvangen van opdrachtgevers.
+Als beheerder wil ik alle evenementen zien zodat ik overzicht houd
+* Criteria: Alle evenementen zichtbaar
+* Aanmeldingen per evenement te openen
 
-Opdrachtgevers (ingelogd)
 
-· Als opdrachtgever, wil ik nieuwe opdrachten kunnen plaatsen.
 
-· Als opdrachtgever, wil ik een titel, beschrijving, budget, deadline en categorie kunnen invullen, zodat de opdracht duidelijk is
+Als ontwikkelaar wil ik authenticatie via Laravel Breeze zodat gebruikers veilig kunnen inloggen
+Criteria: Rollen: bezoeker, deelnemer, organisator, admin
+Middleware per rol
+Policies voor toegang
 
-· Als opdrachtgever, wil ik binnen gekomen offertes kunnen zien en vergelijken.
 
-· Als opdrachtgever, wil ik offertes kunnen accepteren.
+Als bezoeker wil ik een lijst van aankomende evenementen zien zodat ik weet wat er beschikbaar is
+Criteria:
 
-· Als opdrachtgever, wil ik dat andere offertes automatisch worden afgewezen.
+Als bezoeker wil ik de detailpagina van een evenement bekijken zodat ik een weloverwogen keuze kan maken
 
-· Als opdrachtgever, wil ik reviews kunnen achterlaten voor freelancers.
+Als deelnemer wil ik me aanmelden voor een evenement zodat ik zeker weet dat ik een plek heb
+Criteria:
 
-· Als opdrachtgever, wil ik mijn eigen opdrachten kunnen bewerken of sluiten.
+Als organisator wil ik een evenement aanmaken zodat deelnemers zich kunnen inschrijven
+Criteria: Velden: naam, beschrijving, datum, locatie, capaciteit, deadline
+Validatie op verplichte velden
+Direct zichtbaar voor bezoekers
+Ayaz fib num: 2
 
-Beheerders (ingelogd)
+Als deelnemer wil ik een overzicht van mijn aanmeldingen zien zodat ik weet waar ik voor ingeschreven ben
+* Criteria: Status zichtbaar (bevestigd / wachtlijst)
+* Datum en locatie worden getoond
+Ayaz fib num: 2
 
-· Als beheerder, wil ik categorieën kunnen beheren (toevoegen, bewerken en verwijderen).
 
-· Als beheerder, wil ik gebruikers beheren (accounts inzien en blokkeren).
+Als organisator wil ik deelnemerslijst inzien zodat ik weet wie er komt
+Criteria: Naam en e-mail zichtbaar
+Wachtlijst apart weergegeven
 
-· Als beheerder, wil ik opdrachten en reviews moderen.
+Ticket Model/Migration
+
+Categorie Model/Migration
+
+Als organisator wil ik een evenement bewerken/verwijderen zodat ik fouten kan corrigeren
+Criteria: Bewerken zolang evenement niet voorbij is
+Verwijderen vraagt bevestiging
+Alleen eigen evenementen beheren
+
+Zaal Model/Migration
+
+gebruikers Model/Migration
+
+Evenement Model/Migration
+
+Seeder maken voor events
+USER STORIES
+
+Kapciak, Emilio
+
+​
+Oudheusden, David van​
