@@ -12,17 +12,9 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::post('/event/afmelden', [EventController::class, 'afmelden'])->name('event.afmelden');
-// organisor 
-Route::get('events/create', [EventController::class, 'create'])->name('events.create');
-Route::post('events/store', [EventController::class, 'store'])->name('events.store');
-Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
-Route::get('events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
-Route::put('events/{event}', [EventController::class, 'update'])->name('events.update');
-Route::put('events/{event}/delete', [EventController::class, 'delete'])->name('events.delete');
 
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+Route::get('/events/{event}/show_user', [EventController::class, 'show_user'])->name('event.show.user');
 
 
 // Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');

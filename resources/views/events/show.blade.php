@@ -39,16 +39,16 @@
                 </form>
             </div>
         @endif
-            <form action="{{ route('tickets.ticketstore') }}" method="POST">
-                @csrf
-                <input type="hidden" name="event_id" value="{{ $event->id }}">
-                <input type="hidden" name="rank" value="standard">
-                <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
+        <form action="{{ route('tickets.ticketstore') }}" method="POST">
+            @csrf
+            <input type="hidden" name="event_id" value="{{ $event->id }}">
+            <input type="hidden" name="rank" value="standard">
+            <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
 
-                <button type="submit" class="btn btn-primary btn-ticketmaster">
-                    Meld je nu aan
-                </button>
-            </form>>
+            <button type="submit" class="btn btn-primary btn-ticketmaster">
+                Meld je nu aan
+            </button>
+        </form>>
         {{-- Back link --}}
         <a href="{{ route('events.index') }}"
             class="inline-block mt-4 text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">

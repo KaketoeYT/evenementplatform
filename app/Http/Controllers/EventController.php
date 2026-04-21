@@ -139,4 +139,9 @@ class EventController extends Controller
         // 5. Stuur de gebruiker terug met een succesmelding
         return redirect()->back()->with('success', "Je ticket {$ticket->ticket_number} is succesvol afgemeld. Je plek is nu weer beschikbaar voor anderen.");
     }
+        public function show_user(Event $event)
+        {
+            $tickets = $event->tickets()->with('user')->get();
+            return view('events.show_user', compact('event', 'tickets'));
+        }
 }
