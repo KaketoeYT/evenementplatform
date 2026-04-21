@@ -9,7 +9,16 @@
     <title>Events | Ticketmaster Style</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
+    @if (session('success'))
+            <div class="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-green-800 shadow-sm">
+                {{ session('success') }}
+            </div>
+    @endif
+    @if (session('error'))
+            <div class="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-red-800 shadow-sm">
+                {{ session('error') }}
+            </div>
+    @endif
 
 
 
@@ -26,6 +35,8 @@
         </header>
 
         @foreach ($myTickets as $ticket)
+        {{-- Check: Is de huidige tijd VOOR de eventtijd + 2 dagen? --}}
+        @if(now()->lt(\Carbon\Carbon::parse($ticket->event->datetime)->addDays(1)))
             <div class="card mb-3">
                 <div class="card-body">
                     <h5 class="card-title">{{ $ticket->event->title }}</h5>
@@ -34,6 +45,16 @@
                     <p class="card-text">{{ $ticket->event->venue->name ?? 'TBA' }} -
                         {{ $ticket->event->venue->city ?? 'Location TBA' }}</p>
                     <a href="#" class="btn btn-primary">View Details</a>
+                    <form action="{{ route('event.afmelden') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="event_id" value="{{ $ticket->event->id }}">
+                    
+                    <button type="submit" class="btn btn-outline-danger" 
+                            onclick="return confirm('Weet je zeker dat je je plek voor dit evenement wilt opgeven?')">
+                        Afmelden
+                    </button>
+                </form>
+                @endif
                 </div>
             </div>
         @endforeach

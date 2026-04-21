@@ -22,6 +22,11 @@ class EventController extends Controller
 
         $myTickets = Ticket::with('event')
             ->where('user_id', auth()->id())
+            ->whereHas('event', function ($query) {
+            // Alleen tickets tonen waarvan de datum van het event 
+            // groter is dan (of gelijk aan) "nu minus 2 dagen"
+            $query->where('datetime', '>=', now()->subDays(2));
+            })
             ->get();
 
         return view('events.index', compact('eventsByCategory', 'myTickets'));
@@ -102,5 +107,36 @@ class EventController extends Controller
     public function show(Event $event)
     {
         return view('events.show', compact('event'));
+    }
+
+    public function afmelden(Request $request)
+    {
+        $event = Event::findOrFail($request->event_id);
+
+        // Check: Is de huidige tijd later dan de starttijd van het event?
+        if (now()->isAfter($event->datetime)) 
+        {
+            return redirect()->back()->with('error', 'Het evenement is al begonnen of afgelopen. Je kunt je niet meer afmelden.');
+        }
+
+        $request->validate([
+            'event_id' => 'required|exists:events,id',
+        ]);
+
+        // 2. Zoek het ticket dat hoort bij de ingelogde gebruiker EN het gekozen event
+        $ticket = Ticket::where('event_id', $request->event_id)
+                        ->where('user_id', Auth::id())
+                        ->first();
+
+        // 3. Controleer of het ticket wel bestaat
+        if (!$ticket) {
+            return redirect()->back()->with('error', 'Je hebt geen actieve aanmelding voor dit evenement.');
+        }
+
+        // 4. Verwijder het ticket uit de database
+        $ticket->delete();
+
+        // 5. Stuur de gebruiker terug met een succesmelding
+        return redirect()->back()->with('success', "Je ticket {$ticket->ticket_number} is succesvol afgemeld. Je plek is nu weer beschikbaar voor anderen.");
     }
 }
