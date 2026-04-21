@@ -14,6 +14,7 @@ Route::view('dashboard', 'dashboard')
 
 
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+Route::get('/events/{event}/show_user', [EventController::class, 'show_user'])->name('event.show.user');
 
 
 // Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');

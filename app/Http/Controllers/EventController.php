@@ -103,4 +103,10 @@ class EventController extends Controller
     {
         return view('events.show', compact('event'));
     }
+
+    public function show_user(Event $event)
+    {
+        $tickets = $event->tickets()->with('user')->get();
+        return view('events.show_user', compact('event', 'tickets'));
+    }
 }
