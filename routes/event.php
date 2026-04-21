@@ -18,6 +18,7 @@ Route::middleware(['auth', 'check.role:organizer'])->group(function () {
     Route::get('/events/{event}/edit', [EventController::class, 'edit'])->name('events.edit');
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
+    Route::get('/events/{event}/show_user', [EventController::class, 'show_user'])->name('event.show.user');
     });
 
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
