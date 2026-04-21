@@ -8,6 +8,7 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 // This route is only accessible for authenticated users.
 Route::middleware(['auth'])->group(function () {
     Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
+    Route::post('/event/afmelden', [EventController::class, 'afmelden'])->name('event.afmelden');
 });
 
 // These routes are only accessible for users with the 'organizer' role.
