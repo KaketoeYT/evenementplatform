@@ -22,6 +22,7 @@ Route::put('events/{event}', [EventController::class, 'update'])->name('events.u
 Route::put('events/{event}/delete', [EventController::class, 'delete'])->name('events.delete');
 
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+Route::get('/events/{event}/show_user', [EventController::class, 'show_user'])->name('event.show.user');
 
 
 // Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index')->middleware('check.role:admin');
