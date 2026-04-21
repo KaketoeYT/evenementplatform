@@ -12,8 +12,6 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
 
 Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
 

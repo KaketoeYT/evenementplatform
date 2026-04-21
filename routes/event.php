@@ -5,6 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 
+// This route is only accessible for authenticated users.
+Route::middleware(['auth'])->group(function () {
+    Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
+});
+
 // These routes are only accessible for users with the 'organizer' role.
 Route::middleware(['auth', 'check.role:organizer'])->group(function () {
     Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
