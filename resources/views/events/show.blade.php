@@ -1,4 +1,9 @@
 <x-base-layout>
+    @if (session('info'))
+        <script>
+            alert('Je bent al aangemeld voor de wachtrij!');
+        </script>
+    @endif
     <div class="container mx-auto px-4 py-8 max-w-3xl bg-white rounded-lg shadow-md">
         @if (session('success'))
             <div class="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-green-800 shadow-sm">
@@ -39,7 +44,17 @@
                 </form>
             </div>
         @endif
-        <form action="{{ route('tickets.ticketstore') }}" method="POST">
+            @if($event->tickets_count >= $event->venue->capacity)
+            {{-- Knop voor de wachtrij als het vol is --}}
+            <form action="{{ route('event.queue', $event->id) }}" method="POST">
+                @csrf
+                <input type="hidden" name="event_id" value="{{ $event->id }}">
+                <button type="submit" class="btn btn-warning">
+                    Meld je aan voor de wachtrij
+                </button>
+            </form>
+        @else
+            <form action="{{ route('tickets.ticketstore') }}" method="POST">
             @csrf
             <input type="hidden" name="event_id" value="{{ $event->id }}">
             <input type="hidden" name="rank" value="standard">
@@ -48,6 +63,7 @@
             <button type="submit" class="btn btn-primary btn-ticketmaster">
                 Meld je nu aan
             </button>
+            @endif
         </form>>
         {{-- Back link --}}
         <a href="{{ route('events.index') }}"

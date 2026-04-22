@@ -7,6 +7,8 @@ use App\Models\Event;
 use App\Models\Venue;
 use App\Http\Requests\EventStoreRequest;
 use App\Http\Requests\EventUpdateRequest;
+use App\Models\Queue;
+use App\Models\Queues;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -23,7 +25,6 @@ class EventController extends Controller
         $myTickets = Ticket::with('event')
             ->where('user_id', auth()->id())
             ->whereHas('event', function ($query) {
-            // Alleen tickets tonen waarvan de datum van het event 
             // groter is dan (of gelijk aan) "nu minus 2 dagen"
             $query->where('datetime', '>=', now()->subDays(2));
             })
@@ -87,6 +88,7 @@ class EventController extends Controller
         // 3. Check of er nog plek is
         if ($currentTicketsCount >= $event->venue->capacity) {
             return redirect()->back()->with('error', 'Helaas, dit evenement is uitverkocht!');
+            
         }
 
 
@@ -104,8 +106,9 @@ class EventController extends Controller
         // 3. Terugsturen met een succesmelding
         return redirect()->back()->with('success', 'Je plek is gereserveerd! Ticket: ' . $ticket->ticket_number);
     }
-    public function show(Event $event)
+    public function show($id)
     {
+        $event = Event::with('venue')->withCount('tickets')->findOrFail($id);
         return view('events.show', compact('event'));
     }
 
@@ -144,4 +147,33 @@ class EventController extends Controller
             $tickets = $event->tickets()->with('user')->get();
             return view('events.show_user', compact('event', 'tickets'));
         }
+
+    public function joinQueue(Request $request, $eventId)
+    {
+        // Controleer of de gebruiker al in de wachtrij staat om dubbele rijen te voorkomen
+        $exists = Queues::where('user_id', auth()->id())
+                            ->where('event_id', $request->event_id)
+                            ->exists();
+
+        //event check
+        $event = Event::findOrFail($request->event_id);
+
+         // Check: Is de huidige tijd later dan de starttijd van het event?
+        if (now()->isAfter($event->datetime)) 
+        {
+            return redirect()->back()->with('error', 'Het evenement is al begonnen of afgelopen. Je kunt je niet meer aanmelden voor de wachtrij.');
+        }
+
+        if (!$exists) {
+            Queues::create([
+                'user_id' => auth()->id(),
+                'event_id' => $request->event_id,
+            ]);
+
+            return back()->with('success', 'Je bent toegevoegd aan de wachtrij!');
+        }
+        else {
+            return back()->with('info', 'Je staat al aangemeld voor de wachtrij van dit evenement.');
+        }
+    }
 }
