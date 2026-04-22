@@ -7,9 +7,11 @@ use App\Models\Event;
 use App\Models\Venue;
 use App\Http\Requests\EventStoreRequest;
 use App\Http\Requests\EventUpdateRequest;
+use App\Mail\NewTicketMail;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class EventController extends Controller
@@ -99,9 +101,10 @@ class EventController extends Controller
         $ticket->user_id = Auth::id(); // De ID van de ingelogde gebruiker
         $ticket->save();
 
+        //3. Mail sturen naar de gebruiker
+        Mail::to(Auth::user()->email)->send(new NewTicketMail($ticket));
 
-
-        // 3. Terugsturen met een succesmelding
+        // 4. Terugsturen met een succesmelding
         return redirect()->back()->with('success', 'Je plek is gereserveerd! Ticket: ' . $ticket->ticket_number);
     }
     public function show(Event $event)
