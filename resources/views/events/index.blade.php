@@ -1,63 +1,64 @@
 <x-base-layout>
 
-<!DOCTYPE html>
-<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Events | Ticketmaster Style</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    @if (session('success'))
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Events | Ticketmaster Style</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+        @if (session('success'))
             <div class="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-green-800 shadow-sm">
                 {{ session('success') }}
             </div>
-    @endif
-    @if (session('error'))
+        @endif
+        @if (session('error'))
             <div class="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-red-800 shadow-sm">
                 {{ session('error') }}
             </div>
-    @endif
+        @endif
 
+    </head>
 
+    <body>
+        <div class="container py-5">
 
-</head>
+            @if ($myTickets->count() > 0)
+                Hello, {{ auth()->user()?->name ?? 'Guest' }}
 
-<body>
-    <div class="container py-5">
+                <header class="mb-5">
+                    <h1 class="fw-bold mb-1">My Events</h1>
+                    <p class="text-muted">Events you're signed up for</p>
+                </header>
 
-        Hello, {{ auth()->user()?->name ?? 'Guest' }}
+                @foreach ($myTickets as $ticket)
+                    {{-- Check: Is de huidige tijd VOOR de eventtijd + 2 dagen? --}}
+                    @if (now()->lt(\Carbon\Carbon::parse($ticket->event->datetime)->addDays(1)))
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $ticket->event->title }}</h5>
+                                <p class="card-text">
+                                    {{ \Carbon\Carbon::parse($ticket->event->datetime)->format('F j, Y, g:i a') }}
+                                </p>
+                                <p class="card-text">{{ $ticket->event->venue->name ?? 'TBA' }} -
+                                    {{ $ticket->event->venue->city ?? 'Location TBA' }}</p>
+                                <a href="#" class="btn btn-primary">View Details</a>
+                                <form action="{{ route('event.afmelden') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="event_id" value="{{ $ticket->event->id }}">
 
-        <header class="mb-5">
-            <h1 class="fw-bold mb-1">My Events</h1>
-            <p class="text-muted">Events you're signed up for</p>
-        </header>
-
-        @foreach ($myTickets as $ticket)
-        {{-- Check: Is de huidige tijd VOOR de eventtijd + 2 dagen? --}}
-        @if(now()->lt(\Carbon\Carbon::parse($ticket->event->datetime)->addDays(1)))
-            <div class="card mb-3">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $ticket->event->title }}</h5>
-                    <p class="card-text">{{ \Carbon\Carbon::parse($ticket->event->datetime)->format('F j, Y, g:i a') }}
-                    </p>
-                    <p class="card-text">{{ $ticket->event->venue->name ?? 'TBA' }} -
-                        {{ $ticket->event->venue->city ?? 'Location TBA' }}</p>
-                    <a href="#" class="btn btn-primary">View Details</a>
-                    <form action="{{ route('event.afmelden') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="event_id" value="{{ $ticket->event->id }}">
-                    
-                    <button type="submit" class="btn btn-outline-danger" 
-                            onclick="return confirm('Weet je zeker dat je je plek voor dit evenement wilt opgeven?')">
-                        Afmelden
-                    </button>
-                </form>
-                @endif
-                </div>
-            </div>
+                                    <button type="submit" class="btn btn-outline-danger"
+                                        onclick="return confirm('Weet je zeker dat je je plek voor dit evenement wilt opgeven?')">
+                                        Afmelden
+                                    </button>
+                                </form>
+                    @endif
+        </div>
+        </div>
         @endforeach
+        @endif
 
         <header class="mb-5">
             <h1 class="fw-bold mb-1">Upcoming Events</h1>
@@ -109,8 +110,8 @@
                                             <div class="text-muted small">From</div>
                                             <div class="price-text">€{{ number_format($event->entry_price, 2) }}</div>
                                         </div>
-                                        
-                                    </form>
+
+                                        </form>
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('events.show', $event->id) }}"
                                                 class="btn btn-outline-secondary">Bekijk details</a>
@@ -123,8 +124,9 @@
                 </div>
             </section>
         @endforeach
-    </div>
-</body>
-</html>
+        </div>
+    </body>
+
+    </html>
 </x-base-layout>
 
