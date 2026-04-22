@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +17,7 @@
 
         /* ───────── NAV ───────── */
         nav {
-            background: rgba(255,255,255,0.85);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid #e6e6e6;
             height: 70px;
@@ -99,7 +100,7 @@
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at top left, rgba(2,108,223,0.08), transparent 60%);
+            background: radial-gradient(circle at top left, rgba(2, 108, 223, 0.08), transparent 60%);
             opacity: 0;
             transition: opacity 0.3s ease;
             pointer-events: none;
@@ -107,8 +108,8 @@
 
         .card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.10);
-            border-color: rgba(2,108,223,0.3);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.10);
+            border-color: rgba(2, 108, 223, 0.3);
         }
 
         .card:hover::before {
@@ -152,42 +153,44 @@
 
 <body>
 
-{{-- NAV --}}
-<nav>
-    <a href="{{ route('events.index') }}" class="logo">
-        ◈ <span>Event</span>ify
-    </a>
+    {{-- NAV --}}
+    <nav>
+        <a href="{{ route('events.index') }}" class="logo">
+            ◈ <span>Event</span>ify
+        </a>
 
-    <ul class="nav-links">
+        <ul class="nav-links">
 
-        <li><a href="{{ route('events.index') }}">Events</a></li>
+            <li><a href="{{ route('events.index') }}">Events</a></li>
 
-        <li><a href="{{ route('venues.index') }}">Venues</a></li>
+            <li><a href="{{ route('venues.index') }}">Venues</a></li>
 
-        @auth
-            <li>
-                <a href="{{ route('events.create') }}" class="cta">+ Event</a>
-            </li>
+            @if (auth()->user()->role === 'organizer')
+                <li>
+                    <a href="{{ route('events.create') }}" class="cta">+ Event</a>
+                </li>
 
-            <li>
-                <a href="{{ route('venues.create') }}" class="cta">+ Venue</a>
-            </li>
+                <li>
+                    <a href="{{ route('venues.create') }}" class="cta">+ Venue</a>
+                </li>
+            @endif
 
-            <li>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="cta">Logout</button>
-                </form>
-            </li>
-        @else
-            <li>
-                <a href="{{ route('login') }}" class="cta">Login</a>
-            </li>
+            @if (auth())
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="cta">Logout</button>
+                    </form>
+                </li>
+            @else
+                <li>
+                    <a href="{{ route('login') }}" class="cta">Login</a>
+                </li>
 
-            <li>
-                <a href="{{ route('register') }}" class="cta">Register</a>
-            </li>
-        @endauth
+                <li>
+                    <a href="{{ route('register') }}" class="cta">Register</a>
+                </li>
+            @endauth
 
     </ul>
 </nav>
@@ -203,4 +206,6 @@
 </footer>
 
 </body>
+
 </html>
+
