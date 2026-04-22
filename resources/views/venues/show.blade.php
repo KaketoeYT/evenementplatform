@@ -50,6 +50,30 @@
 
         </div>
 
+        <div class="mt-8">
+    <h2 class="text-xl font-bold mb-4">Events at this venue</h2>
+
+    @if($venue->events->count())
+        <div class="space-y-3">
+            @foreach($venue->events as $event)
+                <div class="border p-4 rounded bg-gray-50">
+                    <div class="font-semibold">{{ $event->title }}</div>
+                    <div class="text-sm text-gray-600">
+                        {{ $event->datetime }} • {{ $event->duration }} min
+                    </div>
+
+                    <a href="{{ route('events.show', $event->id) }}"
+                       class="text-blue-600 text-sm hover:underline">
+                        View event
+                    </a>
+                </div>
+            @endforeach
+        </div>
+    @else
+        <p class="text-gray-500">No events for this venue.</p>
+    @endif
+</div>
+
         {{-- Delete section --}}
         <div class="mt-6">
             <form action="{{ route('venues.destroy', $venue->id) }}" method="POST">

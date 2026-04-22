@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateRoleRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -58,5 +59,20 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return to_route('home');
+    }
+
+    public function user_view()
+    {
+        $users = User::all();
+        return view('administrator.user_view', compact('users'));
+    }
+
+    public function update_roles(UpdateRoleRequest $request)
+    {
+        foreach ($request->roles as $userId => $role) {
+            User::where('id', $userId)->update(['role' => $role]);
+        }
+
+        return redirect()->route('administrator.user.view')->with('status', 'Rollen bijgewerkt!');
     }
 }

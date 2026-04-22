@@ -25,7 +25,7 @@
         </div>
 
         {{-- Actions --}}
-        @if (auth()->check() && auth()->user()->role === 'organisator')
+        @if (auth()->check() && auth()->user()->role === 'organizer')
             <div class="flex space-x-4 mb-6">
                 <a href="{{ route('events.edit', $event->id) }}"
                     class="inline-block text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">
@@ -66,7 +66,7 @@
             @endif
         </form>>
         {{-- Back link --}}
-        <a href="{{ route('events.index') }}"
+        <a href="{{ redirect()->back() }}"
             class="inline-block mt-4 text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">
             ← Terug naar alle evenementen
 
