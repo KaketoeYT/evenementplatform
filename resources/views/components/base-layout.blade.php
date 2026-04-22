@@ -63,6 +63,8 @@
             padding: 0.4rem 1rem;
             border-radius: 10px;
             font-weight: 600;
+            border: none;
+            cursor: pointer;
         }
 
         /* ───────── MAIN ───────── */
@@ -157,20 +159,42 @@
     </a>
 
     <ul class="nav-links">
+
         <li><a href="{{ route('events.index') }}">Events</a></li>
 
+        <li><a href="{{ route('venues.index') }}">Venues</a></li>
+
         @auth
-            @if(auth()->user()->role === 'organisator')
-                <li><a class="cta" href="{{ route('events.create') }}">+ Create</a></li>
-            @endif
+            <li>
+                <a href="{{ route('events.create') }}" class="cta">+ Event</a>
+            </li>
+
+            <li>
+                <a href="{{ route('venues.create') }}" class="cta">+ Venue</a>
+            </li>
+
+            <li>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="cta">Logout</button>
+                </form>
+            </li>
+        @else
+            <li>
+                <a href="{{ route('login') }}" class="cta">Login</a>
+            </li>
+
+            <li>
+                <a href="{{ route('register') }}" class="cta">Register</a>
+            </li>
         @endauth
+
     </ul>
 </nav>
 
 {{-- MAIN --}}
 <main>
     {{ $slot }}
-
 </main>
 
 {{-- FOOTER --}}
