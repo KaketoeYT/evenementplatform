@@ -3,7 +3,7 @@
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Controller;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
@@ -21,7 +21,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('settings/appearance', [Settings\AppearanceController::class, 'edit'])->name('settings.appearance.edit');
 });
 
+Route::middleware(['auth', 'check.role:admin'])->group(function () {
+        Route::get('administrator/user_view', [Settings\ProfileController::class, 'user_view'])->name('administrator.user.view');
+        Route::post('administrator/user_view', [Settings\ProfileController::class, 'update_roles'])->name('administrator.user.update');
+});
+
 require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
+require __DIR__.'/venue.php';
+
 
 
