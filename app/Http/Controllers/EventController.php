@@ -7,7 +7,7 @@ use App\Models\Event;
 use App\Models\Venue;
 use App\Http\Requests\EventStoreRequest;
 use App\Http\Requests\EventUpdateRequest;
-use App\Models\Queue;
+
 use App\Models\Queues;
 use App\Mail\NewTicketMail;
 use Illuminate\Support\Facades\Auth;
