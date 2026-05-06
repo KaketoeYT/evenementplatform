@@ -165,15 +165,17 @@
 
             <li><a href="{{ route('venues.index') }}">Venues</a></li>
 
-            @if (auth()->user()->role === 'organizer')
-                <li>
-                    <a href="{{ route('events.create') }}" class="cta">+ Event</a>
-                </li>
+            @auth
+                @if (auth()->user()->role === 'organizer')
+                    <li>
+                        <a href="{{ route('events.create') }}" class="cta">+ Event</a>
+                    </li>
 
-                <li>
-                    <a href="{{ route('venues.create') }}" class="cta">+ Venue</a>
-                </li>
-            @endif
+                    <li>
+                        <a href="{{ route('venues.create') }}" class="cta">+ Venue</a>
+                    </li>
+                @endif
+            @endauth
 
             @if (auth())
                 <li>
