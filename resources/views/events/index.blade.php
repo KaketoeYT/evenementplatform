@@ -113,7 +113,7 @@
                                     </form>
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('events.show', $event->id) }}"
-                                                class="btn btn-outline-secondary">Bekijk details</a>
+                                                class="btn btn-outline-secondary">View details</a>
                                         </div>
                                     </div>
                                 </div>

@@ -11,11 +11,14 @@
 
         {{-- Attributes --}}
         <div class="space-y-2 mb-6">
-            <p><span class="font-semibold">Datumtijd:</span>
-                {{ \Carbon\Carbon::parse($event->datumtijd)->format('d-m-Y H:i') }}</p>
-            <p><span class="font-semibold">Duur:</span> {{ $event->duration }} min </p>
-            <p><span class="font-semibold">Beschrijving:</span> {{ $event->description ?? '-' }}</p>
-            <p><span class="font-semibold">Entree prijs:</span> € {{ number_format($event->entry_price, 2, ',', '.') }}
+            <p><span class="font-semibold">Title:</span> {{ $event->title}}</p>
+            <p><span class="font-semibold">Venue:</span> {{ $event->venue->name ?? 'TBA' }} -
+                {{ $event->venue->city ?? 'Location TBA' }}</p>
+            <p><span class="font-semibold">Date-time:</span>
+                {{ \Carbon\Carbon::parse($event->datetime)->format('d-m-Y H:i') }}</p>
+            <p><span class="font-semibold">Duration:</span> {{ $event->duration }} min </p>
+            <p><span class="font-semibold">Description:</span> {{ $event->description ?? '-' }}</p>
+            <p><span class="font-semibold">Entry Price:</span> € {{ number_format($event->entry_price, 2, ',', '.') }}
             </p>
         </div>
 
@@ -24,7 +27,7 @@
             <div class="flex space-x-4 mb-6">
                 <a href="{{ route('events.edit', $event->id) }}"
                     class="inline-block text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">
-                    Bewerken
+                    Edit
                 </a>
 
                 <form method="POST" action="{{ route('events.destroy', $event->id) }}"
@@ -34,7 +37,7 @@
 
                     <button type="submit"
                         class="text-red-600 hover:text-red-800 font-medium transition-colors duration-200">
-                        Verwijderen
+                        Delete
                     </button>
                 </form>
             </div>
@@ -46,14 +49,13 @@
             <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
 
             <button type="submit" class="btn btn-primary btn-ticketmaster">
-                Meld je nu aan
+                Register Now
             </button>
         </form>>
         {{-- Back link --}}
         <a href="{{ route('events.index') }}"
             class="inline-block mt-4 text-indigo-600 hover:text-indigo-800 font-medium transition-colors duration-200">
-            ← Terug naar alle evenementen
-
+            ← Back to all events
         </a>
     </div>
 </x-base-layout>
