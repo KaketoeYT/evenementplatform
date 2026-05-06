@@ -17,6 +17,7 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
     Route::post('/event/afmelden', [EventController::class, 'afmelden'])->name('event.afmelden');
+    Route::post('/events/{event}/queue', [EventController::class, 'joinQueue'])->name('event.queue')->middleware('auth');
 });
 
 // Routes ONLY for organizer user.
