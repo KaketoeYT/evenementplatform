@@ -7,6 +7,7 @@
             <tr>
                 <th>ID</th>
                 <th>Naam</th>
+                <th>Password</th>
                 <th>Email</th>
                 <th>Rol</th>
                 <th>Telefoonnummer</th>
@@ -19,6 +20,7 @@
                 <tr>
                     <td>{{ $user->id }}</td>
                     <td>{{ $user->name }}</td>
+                    <td><a href="{{ route('mails.password_reset', $user->id) }}" class="btn btn-sm btn-warning">Reset mail versturen</a></td>
                     <td>{{ $user->email }}</td>
                     <td>
                         <select name="roles[{{ $user->id }}]">

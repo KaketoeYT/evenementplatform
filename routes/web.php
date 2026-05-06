@@ -26,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'check.role:admin'])->group(function () {
         Route::get('administrator/user_view', [Settings\ProfileController::class, 'user_view'])->name('administrator.user.view');
         Route::post('administrator/user_view', [Settings\ProfileController::class, 'update_roles'])->name('administrator.user.update');
+        Route::get('mails/password_reset/{userId}', [Settings\ProfileController::class, 'sendPasswordResetMail'])->name('mails.password_reset');
 });
 
 require __DIR__.'/auth.php';
