@@ -1,13 +1,18 @@
 <x-base-layout>
     @if (session('info'))
-        <script>
-            alert('Je bent al aangemeld voor de wachtrij!');
-        </script>
+        <div class="mb-4 rounded-lg bg-green-50 border border-red-200 px-4 py-3 text-green-800 shadow-sm">
+                {{ session('info') }}
+            </div>
     @endif
     <div class="container mx-auto px-4 py-8 max-w-3xl bg-white rounded-lg shadow-md">
         @if (session('success'))
             <div class="mb-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-green-800 shadow-sm">
                 {{ session('success') }}
+            </div>
+        @endif
+        @if (@session('error'))
+            <div class="mb-4 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-red-800 shadow-sm">
+                {{ session('error') }}
             </div>
         @endif
         <h1 class="text-4xl font-bold mb-4 text-gray-900">

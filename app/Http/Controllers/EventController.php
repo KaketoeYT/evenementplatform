@@ -175,8 +175,8 @@ class EventController extends Controller
 
             return back()->with('success', 'Je bent toegevoegd aan de wachtrij!');
         }
-        else {
-            return back()->with('info', 'Je staat al aangemeld voor de wachtrij van dit evenement.');
-        }
+    
+        return back()->with('info', 'Je staat al aangemeld voor de wachtrij van dit evenement.');
+    
     }
 }
