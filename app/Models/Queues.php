@@ -11,6 +11,7 @@ class Queues extends Model
     protected $fillable = [
         'event_id',
         'user_id',
+        'invited_at',
     ];
 
     public function event()
