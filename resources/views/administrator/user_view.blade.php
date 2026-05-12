@@ -10,6 +10,7 @@
                 <th>Password</th>
                 <th>Email</th>
                 <th>Rol</th>
+                <th>Status</th>
                 <th>Telefoonnummer</th>
                 <th>Stad</th>
                 <th>Land</th>
@@ -29,13 +30,22 @@
                             <option value="organizer" @selected($user->role === 'organizer')>Organizer</option>
                         </select>
                     </td>
+                    <td>
+                        {{ ucfirst($user->status) }}
+                        <form method="POST" action="{{ route('administrator.user.deactivate', $user->id) }}" style="display: inline;">
+                            @csrf
+                            <button type="submit" class="btn btn-sm {{ $user->status === 'active' ? 'btn-danger' : 'btn-success' }}">
+                                {{ $user->status === 'active' ? 'Deactiveren' : 'Activeren' }}
+                            </button>
+                        </form>
+                    </td>
                     <td>{{ $user->phonenumber }}</td>
                     <td>{{ $user->city }}</td>
                     <td>{{ $user->country }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7">Geen gebruikers gevonden</td>
+                    <td colspan="9">Geen gebruikers gevonden</td>
                 </tr>
             @endforelse
         </tbody>
