@@ -32,12 +32,9 @@
                     </td>
                     <td>
                         {{ ucfirst($user->status) }}
-                        <form method="POST" action="{{ route('administrator.user.deactivate', $user->id) }}" style="display: inline;">
-                            @csrf
-                            <button type="submit" class="btn btn-sm {{ $user->status === 'active' ? 'btn-danger' : 'btn-success' }}">
-                                {{ $user->status === 'active' ? 'Deactiveren' : 'Activeren' }}
-                            </button>
-                        </form>
+                        <button type="button" class="btn btn-sm deactivate-btn {{ $user->status === 'active' ? 'btn-danger' : 'btn-success' }}" data-user-id="{{ $user->id }}" data-user-status="{{ $user->status }}">
+                            {{ $user->status === 'active' ? 'Deactiveren' : 'Activeren' }}
+                        </button>
                     </td>
                     <td>{{ $user->phonenumber }}</td>
                     <td>{{ $user->city }}</td>
@@ -52,3 +49,30 @@
     </table>
     <button type="submit">Opslaan</button>
 </form>
+
+<script>
+document.querySelectorAll('.deactivate-btn').forEach(button => {
+    button.addEventListener('click', async function() {
+        if (!confirm('Weet je zeker dat je deze actie wilt uitvoeren?')) return;
+
+        try {
+            const userId = this.dataset.userId;
+            const response = await fetch(`/administrator/user_deactivate/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                alert('Er is een fout opgetreden.');
+            }
+        } catch (error) {
+            alert('Er is een fout opgetreden: ' + error.message);
+        }
+    });
+});
+</script>
