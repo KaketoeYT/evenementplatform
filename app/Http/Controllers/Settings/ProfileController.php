@@ -67,6 +67,7 @@ class ProfileController extends Controller
     public function user_view()
     {
         $users = User::all();
+
         return view('administrator.user_view', compact('users'));
     }
 
@@ -79,6 +80,17 @@ class ProfileController extends Controller
         return redirect()->route('administrator.user.view')->with('status', 'Rollen bijgewerkt!');
     }
 
+    public function deactivate_user($userId): RedirectResponse
+    {
+        $user = User::findOrFail($userId);
+        $user->status = $user->status === 'active' ? 'deactive' : 'active';
+        $user->save();
+
+        $action = $user->status === 'active' ? 'geactiveerd' : 'gedeactiveerd';
+
+        return redirect()->route('administrator.user.view')->with('status', 'Gebruiker '.$action.'!');
+    }
+
     public function sendPasswordResetMail($userId): RedirectResponse
     {
         $user = User::findOrFail($userId);
@@ -89,6 +101,6 @@ class ProfileController extends Controller
         // Verstuur de mail
         Mail::to($user->email)->send(new PasswordResetMail($token, $user->email));
 
-        return redirect()->route('administrator.user.view')->with('status', 'Wachtwoord reset mail verstuurd naar ' . $user->email);
+        return redirect()->route('administrator.user.view')->with('status', 'Wachtwoord reset mail verstuurd naar '.$user->email);
     }
 }
