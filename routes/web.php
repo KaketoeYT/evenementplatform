@@ -4,10 +4,14 @@ use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendeeController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\HomeController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -40,7 +44,6 @@ require __DIR__ . '/rapport.php';
 require __DIR__ . '/attendee.php';
     Route::post('administrator/user_deactivate/{userId}', [Settings\ProfileController::class, 'deactivate_user'])->name('administrator.user.deactivate');
     Route::get('mails/password_reset/{userId}', [Settings\ProfileController::class, 'sendPasswordResetMail'])->name('mails.password_reset');
-});
 
 require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
