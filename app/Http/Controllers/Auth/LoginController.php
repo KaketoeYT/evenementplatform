@@ -36,6 +36,17 @@ class LoginController extends Controller
             ]);
         }
 
+        // Check if user is active
+        $user = Auth::user();
+        if ($user->status === 'deactive') {
+            Auth::logout();
+            RateLimiter::hit($this->throttleKey($request));
+
+            throw ValidationException::withMessages([
+                'email' => 'Dit account is gedeactiveerd. Neem contact op met de beheerder.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey($request));
 
         $request->session()->regenerate();
