@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('user_id');
+            $table->timestamp('invited_at')->nullable();
             $table->timestamps();
         });
     }

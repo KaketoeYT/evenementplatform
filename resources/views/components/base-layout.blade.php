@@ -177,7 +177,7 @@
                 @endif
             @endauth
 
-            @if (auth())
+            @auth
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
@@ -194,18 +194,18 @@
                 </li>
             @endauth
 
-    </ul>
-</nav>
+        </ul>
+    </nav>
 
-{{-- MAIN --}}
-<main>
-    {{ $slot }}
-</main>
+    {{-- MAIN --}}
+    <main>
+        {{ $slot }}
+    </main>
 
-{{-- FOOTER --}}
-<footer>
-    © {{ date('Y') }} Eventify — Premium event platform
-</footer>
+    {{-- FOOTER --}}
+    <footer>
+        © {{ date('Y') }} Eventify — Premium event platform
+    </footer>
 
 </body>
 

@@ -10,12 +10,12 @@
 
             <div class="flex gap-2">
                 <a href="{{ route('venues.edit', $venue->id) }}"
-                   class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
+                    class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600">
                     Edit
                 </a>
 
-                <a href="{{ route('venues.index') }}"
-                   class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+                <a href="{{ redirect()->back()->getTargetUrl() }}"
+                    class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
                     Back
                 </a>
             </div>
@@ -51,28 +51,28 @@
         </div>
 
         <div class="mt-8">
-    <h2 class="text-xl font-bold mb-4">Events at this venue</h2>
+            <h2 class="text-xl font-bold mb-4">Events at this venue</h2>
 
-    @if($venue->events->count())
-        <div class="space-y-3">
-            @foreach($venue->events as $event)
-                <div class="border p-4 rounded bg-gray-50">
-                    <div class="font-semibold">{{ $event->title }}</div>
-                    <div class="text-sm text-gray-600">
-                        {{ $event->datetime }} • {{ $event->duration }} min
-                    </div>
+            @if ($venue->events->count())
+                <div class="space-y-3">
+                    @foreach ($venue->events as $event)
+                        <div class="border p-4 rounded bg-gray-50">
+                            <div class="font-semibold">{{ $event->title }}</div>
+                            <div class="text-sm text-gray-600">
+                                {{ $event->datetime }} • {{ $event->duration }} min
+                            </div>
 
-                    <a href="{{ route('events.show', $event->id) }}"
-                       class="text-blue-600 text-sm hover:underline">
-                        View event
-                    </a>
+                            <a href="{{ route('events.show', $event->id) }}"
+                                class="text-blue-600 text-sm hover:underline">
+                                View event
+                            </a>
+                        </div>
+                    @endforeach
                 </div>
-            @endforeach
+            @else
+                <p class="text-gray-500">No events for this venue.</p>
+            @endif
         </div>
-    @else
-        <p class="text-gray-500">No events for this venue.</p>
-    @endif
-</div>
 
         {{-- Delete section --}}
         <div class="mt-6">
@@ -80,9 +80,8 @@
                 @csrf
                 @method('DELETE')
 
-                <button type="submit"
-                        onclick="return confirm('Are you sure you want to delete this venue?')"
-                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this venue?')"
+                    class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
                     Delete Venue
                 </button>
             </form>
@@ -90,3 +89,4 @@
 
     </div>
 </x-base-layout>
+
