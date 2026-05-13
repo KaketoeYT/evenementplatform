@@ -155,7 +155,7 @@
 
     {{-- NAV --}}
     <nav>
-        <a href="{{ route('events.index') }}" class="logo">
+        <a href="{{ route('home') }}" class="logo">
             ◈ <span>Event</span>ify
         </a>
 
