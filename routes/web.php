@@ -4,9 +4,13 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
+
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
