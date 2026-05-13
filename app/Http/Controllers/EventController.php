@@ -27,8 +27,8 @@ class EventController extends Controller
         $myTickets = Ticket::with('event')
             ->where('user_id', auth()->id())
             ->whereHas('event', function ($query) {
-            // groter is dan (of gelijk aan) "nu minus 2 dagen"
-            $query->where('datetime', '>=', now()->subDays(2));
+                // groter is dan (of gelijk aan) "nu minus 2 dagen"
+                $query->where('datetime', '>=', now()->subDays(2));
             })
             ->get();
 
@@ -81,6 +81,30 @@ class EventController extends Controller
 
     public function ticketstore(Request $request)
     {
+
+        $event = Event::with('venue')->findOrFail($request->event_id);
+
+        // Centrale registratie check
+        if (!$event->canRegister()) {
+
+            if ($event->registration_closed) {
+                return back()->with('error', 'Aanmelding gesloten');
+            }
+
+            if (now()->isAfter($event->datetime)) {
+                return back()->with('error', 'Het evenement is al begonnen.');
+            }
+
+            if ($event->tickets()->count() >= $event->venue->capacity) {
+                return back()->with('error', 'Helaas, dit evenement is uitverkocht!');
+            }
+        }
+
+
+        // bestaande capaciteit check
+        if ($event->tickets()->count() >= $event->venue->capacity) {
+            return back()->with('error', 'Helaas, dit evenement is uitverkocht!');
+        }
         // 1. Zoek het evenement en de bijbehorende venue
         $event = Event::with('venue')->findOrFail($request->event_id);
 
@@ -90,7 +114,6 @@ class EventController extends Controller
         // 3. Check of er nog plek is
         if ($currentTicketsCount >= $event->venue->capacity) {
             return redirect()->back()->with('error', 'Helaas, dit evenement is uitverkocht!');
-            
         }
 
 
@@ -109,6 +132,7 @@ class EventController extends Controller
         // 4. Terugsturen met een succesmelding
         return redirect()->back()->with('success', 'Je plek is gereserveerd! Ticket: ' . $ticket->ticket_number);
     }
+
     public function show($id)
     {
         $event = Event::with('venue')->withCount('tickets')->findOrFail($id);
@@ -120,8 +144,7 @@ class EventController extends Controller
         $event = Event::findOrFail($request->event_id);
 
         // Check: Is de huidige tijd later dan de starttijd van het event?
-        if (now()->isAfter($event->datetime)) 
-        {
+        if (now()->isAfter($event->datetime)) {
             return redirect()->back()->with('error', 'Het evenement is al begonnen of afgelopen. Je kunt je niet meer afmelden.');
         }
 
@@ -131,8 +154,8 @@ class EventController extends Controller
 
         // 2. Zoek het ticket dat hoort bij de ingelogde gebruiker EN het gekozen event
         $ticket = Ticket::where('event_id', $request->event_id)
-                        ->where('user_id', Auth::id())
-                        ->first();
+            ->where('user_id', Auth::id())
+            ->first();
 
         // 3. Controleer of het ticket wel bestaat
         if (!$ticket) {
@@ -145,25 +168,25 @@ class EventController extends Controller
         // 5. Stuur de gebruiker terug met een succesmelding
         return redirect()->back()->with('success', "Je ticket {$ticket->ticket_number} is succesvol afgemeld. Je plek is nu weer beschikbaar voor anderen.");
     }
-        public function show_user(Event $event)
-        {
-            $tickets = $event->tickets()->with('user')->get();
-            return view('events.show_user', compact('event', 'tickets'));
-        }
+    
+    public function show_user(Event $event)
+    {
+        $tickets = $event->tickets()->with('user')->get();
+        return view('events.show_user', compact('event', 'tickets'));
+    }
 
     public function joinQueue(Request $request, $eventId)
     {
         // Controleer of de gebruiker al in de wachtrij staat om dubbele rijen te voorkomen
         $exists = Queues::where('user_id', auth()->id())
-                            ->where('event_id', $request->event_id)
-                            ->exists();
+            ->where('event_id', $request->event_id)
+            ->exists();
 
         //event check
         $event = Event::findOrFail($request->event_id);
 
-         // Check: Is de huidige tijd later dan de starttijd van het event?
-        if (now()->isAfter($event->datetime)) 
-        {
+        // Check: Is de huidige tijd later dan de starttijd van het event?
+        if (now()->isAfter($event->datetime)) {
             return redirect()->back()->with('error', 'Het evenement is al begonnen of afgelopen. Je kunt je niet meer aanmelden voor de wachtrij.');
         }
 
@@ -174,9 +197,16 @@ class EventController extends Controller
             ]);
 
             return back()->with('success', 'Je bent toegevoegd aan de wachtrij!');
-        }
-        else {
+        } else {
             return back()->with('info', 'Je staat al aangemeld voor de wachtrij van dit evenement.');
         }
+    }
+
+    public function toggleRegistration(Event $event)
+    {
+        $event->registration_closed = !$event->registration_closed;
+        $event->save();
+
+        return back()->with('success', 'Status aangepast');
     }
 }

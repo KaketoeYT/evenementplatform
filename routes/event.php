@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
@@ -9,7 +9,7 @@ Route::middleware(['auth', 'check.role:user'])->group(function () {
 });
 
 // Routes ONLY for admin user.
-Route::middleware(['auth', 'check.role:admin'])->group(function () {
+Route::middleware(['auth', 'check.role:admin,organizer'])->group(function () {
     Route::get('/admin/events', [EventController::class, 'index_admin'])->name('admin.events.index');
 });
 
@@ -33,4 +33,3 @@ Route::middleware(['auth', 'check.role:organizer'])->group(function () {
 // Routes for every user, including guests.
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.show');
-

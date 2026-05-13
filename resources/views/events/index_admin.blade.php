@@ -1,3 +1,4 @@
+<x-base-layout>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,6 +48,20 @@
                             <button type="submit" class="btn btn-link p-0 text-danger">verwijder</button>
                         </form>
                     </td>
+                    <td>
+                            <form method="POST" action="{{ route('events.toggleRegistration', $event) }}">
+                                    @csrf
+
+                                    <button type="submit"
+                                        class="px-4 py-2 text-sm font-semibold rounded-lg transition
+                                        {{ $event->registration_closed 
+                                            ? 'bg-green-600 hover:bg-green-700 text-white' 
+                                            : 'bg-red-600 hover:bg-red-700 text-white' }}">
+
+                                        {{ $event->registration_closed ? 'Open aanmelding' : 'Sluit aanmelding' }}
+                                    </button>
+                                </form>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -54,3 +69,4 @@
     </div>
 </body>
 </html>
+</x-base-layout>
