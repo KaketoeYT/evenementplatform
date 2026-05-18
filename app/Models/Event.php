@@ -24,7 +24,8 @@ class Event extends Model
         'description',
         'entry_price',
         'category_id',
-        'venue_id'
+        'venue_id',
+        'image_url'
     ];
 
     public function category()

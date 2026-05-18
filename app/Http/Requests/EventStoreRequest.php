@@ -30,6 +30,7 @@ class EventStoreRequest extends FormRequest
             'entry_price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'venue_id' => 'required|exists:venues,id',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }
