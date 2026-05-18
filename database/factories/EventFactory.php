@@ -22,7 +22,7 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => fake()->sentence(4),
+            'title' => fake()->company() . ' ' . fake()->word(),
             'datetime' => fake()->dateTimeBetween('now', '+3 months'),
             'duration' => fake()->numberBetween(60, 360),
             'description' => fake()->paragraph(),
