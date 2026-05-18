@@ -165,6 +165,8 @@
 
             <li><a href="{{ route('venues.index') }}">Venues</a></li>
 
+            <li><a href="{{ route('dashboard') }}">my profile</a></li>
+
             @auth
                 @if (auth()->user()->role === 'organizer')
                     <li>

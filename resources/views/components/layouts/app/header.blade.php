@@ -11,6 +11,16 @@
                 </svg>
             </button>
             <div class="ml-4 font-semibold text-xl text-blue-600 dark:text-blue-400">{{ config('app.name') }}</div>
+
+            <!-- NIEUW: Toegevoegde links naast de app naam -->
+            <ul class="flex items-center space-x-4 ml-6 text-sm font-medium text-gray-600 dark:text-gray-300">
+                <li>
+                    <a href="{{ route('events.index') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Events</a>
+                </li>
+                <li>
+                    <a href="{{ route('venues.index') }}" class="hover:text-blue-600 dark:hover:text-blue-400 transition">Venues</a>
+                </li>
+            </ul>
         </div>
 
         <!-- Right side: Search, notifications, profile -->
@@ -30,6 +40,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
+                
 
                 <div x-show="open" @click.away="open = false" :class="{ 'block': open, 'hidden': !open }"
                     class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700">
