@@ -122,7 +122,16 @@ class EventController extends Controller
         $ticket = new Ticket();
         $ticket->ticket_number = 'TKT-' . strtoupper(Str::random(8)); // Maakt een unieke code
         $ticket->rank = $request->rank;
-        $ticket->price = $request->entry_price;
+        if ($ticket->rank === 'VIP') {
+            $ticket->price = $request->entry_price * 2;
+        }
+        if ($ticket->rank === 'seated')
+            {
+            $ticket->price = $request->entry_price * 0.75;
+        }
+        else {
+            $ticket->price = $request->entry_price;
+        }
         $ticket->event_id = $request->event_id;
         $ticket->user_id = Auth::id(); // De ID van de ingelogde gebruiker
         $ticket->save();
