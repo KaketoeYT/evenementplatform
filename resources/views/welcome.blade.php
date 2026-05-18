@@ -1,5 +1,4 @@
 <x-base-layout>
-    {{-- Hero: Nu 100% breed en strak tegen de nav aan --}}
     <section class="bg-slate-50 border-b border-slate-200 py-20 lg:py-32 w-full">
         <div class="max-w-[1150px] mx-auto px-6">
             <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
@@ -9,7 +8,7 @@
                 Ontdek en reserveer je plek voor de meest populaire evenementen van dit moment.
             </p>
             <div class="flex gap-4">
-                <a href="#events"
+                <a href="{{ route('events.index') }}"
                     class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-200">Bekijk
                     Events</a>
             </div>
@@ -73,7 +72,7 @@
                     zoals jij dat wilt. Snel, veilig en zonder gedoe.</p>
                 <a href="{{ route('register') }}"
                     class="inline-block bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold hover:bg-blue-50 transition-colors">Word
-                    lid van Eventify</a>
+                    organisator op Eventify</a>
             </div>
             <div class="absolute -right-20 -bottom-20 text-[300px] font-black text-white opacity-5 select-none">◈</div>
         </section>
