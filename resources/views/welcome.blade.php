@@ -9,7 +9,7 @@
                 Ontdek en reserveer je plek voor de meest populaire evenementen van dit moment.
             </p>
             <div class="flex gap-4">
-                <a href="#events"
+                <a href="{{ route('events.index') }}"
                     class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-200">Bekijk
                     Events</a>
             </div>
