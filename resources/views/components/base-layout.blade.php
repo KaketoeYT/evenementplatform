@@ -186,6 +186,18 @@
             @endauth
 
             @auth
+                @if (auth()->user()->role === 'admin')
+                    <li>
+                        <a href="{{ route('administrator.user.view') }}" class="cta">Users</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.events.index') }}" class="cta">Events</a>
+                    </li>
+                @endif
+            @endauth
+
+            @auth
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
