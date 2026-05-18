@@ -14,6 +14,8 @@ class Event extends Model
     protected $casts = [
         'datetime' => 'datetime',
         'registration_closed' => 'boolean',
+        'vip_active' => 'boolean',
+        'seated_active' => 'boolean',
 
     ];
 
@@ -24,7 +26,9 @@ class Event extends Model
         'description',
         'entry_price',
         'category_id',
-        'venue_id'
+        'venue_id',
+        'vip_active',
+        'seated_active'
     ];
 
     public function category()
