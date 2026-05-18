@@ -205,9 +205,9 @@
 
             {{-- Rechter Kant: Ticket Box --}}
             <div class="col-lg-4">
-                <div class="ticket-sidebar shadow-sm p-4">
-                    <div class="mb-4 text-center text-lg-start">
-                        <div class="info-label mb-1">Price From</div>
+                <div class="ticket-sidebar shadow-sm p-4 sticky-top" style="top: 20px;">
+                    <div class="mb-4">
+                        <div class="info-label mb-1">PRICE FOR STANDING</div>
                         <div class="price-large">€{{ number_format($event->entry_price, 2, ',', '.') }}</div>
                     </div>
 
@@ -230,10 +230,45 @@
                                 <input type="hidden" name="event_id" value="{{ $event->id }}">
                                 <input type="hidden" name="rank" value="standard">
                                 <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
-                                <button type="submit" class="btn btn-ticketmaster shadow-sm mb-2">
-                                    <i class="bi bi-ticket-perforated me-2"></i>GET TICKETS
+                                <button type="submit" class="btn btn-ticketmaster shadow-sm mb-3">
+                                    GET STANDING TICKETS
                                 </button>
                             </form>
+
+                    @if ($event->vip_active)
+                    <div class="mb-4">
+                        <div class="info-label mb-1">PRICE FOR VIP</div>
+                        <div class="price-large">€{{ number_format($event->entry_price *2, 2, ',', '.') }}</div>
+                    </div>
+
+                            <form action="{{ route('tickets.ticketstore') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                <input type="hidden" name="rank" value="VIP">
+                                <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
+                                <button type="submit" class="btn btn-ticketmaster shadow-sm mb-3">
+                                    GET VIP TICKETS
+                                </button>
+                            </form>
+                    @endif
+
+                    @if ($event->seated_active)
+                    <div class="mb-4">
+                        <div class="info-label mb-1">PRICE FOR SEATED</div>
+                        <div class="price-large">€{{ number_format($event->entry_price *.75, 2, ',', '.') }}</div>
+                    </div>
+                            <form action="{{ route('tickets.ticketstore') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                <input type="hidden" name="rank" value="seated">
+                                <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
+                                <button type="submit" class="btn btn-ticketmaster shadow-sm mb-3">
+                                    GET SEATED TICKETS
+                                </button>
+                            </form>
+                    @endif
+
+
                         @else
                             <button class="btn btn-secondary w-100 py-3 mb-2 rounded-3" disabled>
                                 <i class="bi bi-lock-fill me-2"></i>REGISTRATION CLOSED

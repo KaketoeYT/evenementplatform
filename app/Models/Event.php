@@ -14,6 +14,8 @@ class Event extends Model
     protected $casts = [
         'datetime' => 'datetime',
         'registration_closed' => 'boolean',
+        'vip_active' => 'boolean',
+        'seated_active' => 'boolean',
 
     ];
 
@@ -25,7 +27,9 @@ class Event extends Model
         'entry_price',
         'category_id',
         'venue_id',
-        'image_url'
+        'image_url',
+        'vip_active',
+        'seated_active'
     ];
 
     public function category()
@@ -44,22 +48,22 @@ class Event extends Model
     }
 
     public function canRegister()
-{
-    // Aanmelding handmatig gesloten
-    if ($this->registration_closed) {
-        return false;
-    }
+    {
+        // Aanmelding handmatig gesloten
+        if ($this->registration_closed) {
+            return false;
+        }
 
-    // Event al begonnen
-    if (now()->isAfter($this->datetime)) {
-        return false;
-    }
+        // Event al begonnen
+        if (now()->isAfter($this->datetime)) {
+            return false;
+        }
 
-    // Venue vol
-    if ($this->tickets()->count() >= $this->venue->capacity) {
-        return false;
-    }
+        // Venue vol
+        if ($this->tickets()->count() >= $this->venue->capacity) {
+            return false;
+        }
 
-    return true;
-}
+        return true;
+    }
 }

@@ -31,6 +31,8 @@ class EventStoreRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'venue_id' => 'required|exists:venues,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'vip_active' => 'required|boolean',
+            'seated_active' => 'required|boolean',
         ];
     }
 }
