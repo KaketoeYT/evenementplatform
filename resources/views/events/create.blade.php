@@ -38,6 +38,18 @@
             @endforeach
         </select><br><br>
 
+        <label for="vip_active">VIP Tickets Actief:</label>
+        <select name="vip_active" id="vip_active" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select><br><br>
+
+        <label for="seated_active">Seated Tickets Actief:</label>
+        <select name="seated_active" id="seated_active" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select><br><br>
+
         <button type="submit">Create Event</button>
     </form>
 </body>
