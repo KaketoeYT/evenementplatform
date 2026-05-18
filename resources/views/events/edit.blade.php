@@ -40,6 +40,18 @@
             @endforeach
         </select><br><br>
 
+        <label for="vip_active">VIP Tickets Actief:</label>
+        <select name="vip_active" id="vip_active" required>
+            <option value="1" @selected(old('vip_active', $event->vip_active) == true)>Yes</option>
+            <option value="0" @selected(old('vip_active', $event->vip_active) == false)>No</option>
+        </select><br><br>
+
+        <label for="seated_active">Seated Tickets Actief:</label>
+        <select name="seated_active" id="seated_active" required>
+            <option value="1" @selected(old('seated_active', $event->seated_active) == true)>Yes</option>
+            <option value="0" @selected(old('seated_active', $event->seated_active) == false)>No</option>
+        </select><br><br>
+
         <button type="submit">Edit Event</button>
     </form>
 </body>

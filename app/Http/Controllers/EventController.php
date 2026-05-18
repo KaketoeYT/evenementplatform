@@ -52,12 +52,25 @@ class EventController extends Controller
         return view('events.create', compact('categories', 'venues'));
     }
 
-    public function store(EventStoreRequest $request)
-    {
-        Event::create($request->validated());
+public function store(EventStoreRequest $request)
+{
+    // 1. Haal alle goedgekeurde tekstvelden op
+    $data = $request->validated();
 
-        return redirect()->route('events.index')->with('success', 'Event created successfully.');
+    // 2. Kijk RECHTSTREEKS in het request (omzeil de validatie-filter voor het bestand)
+    if ($request->hasFile('image')) {
+        // Sla de afbeelding op in de map 'storage/app/public/event_images'
+        $path = $request->file('image')->store('event_images', 'public');
+        
+        // Voeg het gegenereerde pad handmatig toe aan de data-array
+        $data['image_url'] = $path;
     }
+
+    // 3. Maak het event aan in de database
+    Event::create($data);
+
+    return redirect()->route('events.index')->with('success', 'Event created successfully.');
+}
 
     public function edit(Event $event)
     {
@@ -122,7 +135,16 @@ class EventController extends Controller
         $ticket = new Ticket();
         $ticket->ticket_number = 'TKT-' . strtoupper(Str::random(8)); // Maakt een unieke code
         $ticket->rank = $request->rank;
-        $ticket->price = $request->entry_price;
+        if ($ticket->rank === 'VIP') {
+            $ticket->price = $request->entry_price * 2;
+        }
+        if ($ticket->rank === 'seated')
+            {
+            $ticket->price = $request->entry_price * 0.75;
+        }
+        else {
+            $ticket->price = $request->entry_price;
+        }
         $ticket->event_id = $request->event_id;
         $ticket->user_id = Auth::id(); // De ID van de ingelogde gebruiker
         $ticket->save();

@@ -7,8 +7,11 @@
 </head>
 <body>
     <h1>Create New Event</h1>
-    <form action="{{ route('events.store') }}" method="POST">
+    
+    <!-- AANGEPAST: enctype="multipart/form-data" is nu toegevoegd zodat bestanden verzonden kunnen worden -->
+    <form action="{{ route('events.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        
         <label for="title">Title:</label>
         <input type="text" name="title" id="title" required><br><br>
 
@@ -36,6 +39,21 @@
             @foreach($venues as $venue)
                 <option value="{{ $venue->id }}">{{ $venue->name }}</option>
             @endforeach
+        </select><br><br>
+
+        <!-- AANGEPAST: Dit is nu een echt bestandsveld geworden met de naam 'image' -->
+        <label for="image">Event Image:</label>
+        <input type="file" name="image" id="image" accept="image/*"><br><br>
+        <label for="vip_active">VIP Tickets Actief:</label>
+        <select name="vip_active" id="vip_active" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select><br><br>
+
+        <label for="seated_active">Seated Tickets Actief:</label>
+        <select name="seated_active" id="seated_active" required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
         </select><br><br>
 
         <button type="submit">Create Event</button>
