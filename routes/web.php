@@ -12,10 +12,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/dashboard', [DashboardController::class, 'index']);
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::view('dashboard', 'dashboard')
+Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 

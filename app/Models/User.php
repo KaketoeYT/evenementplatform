@@ -64,10 +64,6 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function tickets()
-    {
-        return $this->hasMany(Ticket::class);
-    }
 
     public function tickets()
 {

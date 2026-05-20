@@ -13,7 +13,9 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ __('Mijn Tickets') }}</p>
-                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">{{ count($tickets) }}</p>
+                    <p class="text-2xl font-bold text-gray-800 dark:text-gray-100 mt-1">
+                    {{ count($tickets ?? []) }}
+                    </p>
                     <p class="text-xs text-green-500 flex items-center mt-1">
                         {{ __('Actieve reserveringen') }}
                     </p>
