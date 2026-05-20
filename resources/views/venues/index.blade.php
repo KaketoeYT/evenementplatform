@@ -8,9 +8,12 @@
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-3xl font-bold">Venues</h1>
 
-            <a href="{{ route('venues.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                + Create Venue
-            </a>
+        
+            @if(auth()->check() && auth()->user()->role === 'organizer')
+        <a href="{{ route('venues.create') }}" class="btn btn-primary px-4 fw-bold" style="background-color: #026cdf; border: none;">
+            + Create Venue
+        </a>
+    @endif
         </div>
 
         @if (session('success'))

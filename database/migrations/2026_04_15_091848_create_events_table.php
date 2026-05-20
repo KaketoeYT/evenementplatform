@@ -19,7 +19,9 @@ return new class extends Migration
             $table->integer('duration');
             $table->text('description');
             $table->decimal('entry_price', 10, 2);
+            $table->string('image_url')->nullable(); // Nu mag de kolom ook leeg blijven
 
+            
             $table->foreignId('venue_id')
                 ->constrained()
                 ->onDelete('cascade');

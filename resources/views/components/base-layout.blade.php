@@ -70,6 +70,14 @@
 
         /* ───────── MAIN ───────── */
         main {
+            /* We halen max-width en padding hier weg zodat
+            secties zoals de Hero de volledige breedte kunnen pakken */
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* We maken een nieuwe container class voor de normale pagina's */
+        .content-container {
             max-width: 1150px;
             margin: 0 auto;
             padding: 3rem 1.5rem;
@@ -155,7 +163,7 @@
 
     {{-- NAV --}}
     <nav>
-        <a href="{{ route('events.index') }}" class="logo">
+        <a href="{{ route('home') }}" class="logo">
             ◈ <span>Event</span>ify
         </a>
 
