@@ -51,3 +51,4 @@ require __DIR__.'/auth.php';
 require __DIR__.'/event.php';
 require __DIR__.'/venue.php';
 require __DIR__.'/rapport.php';
+require __DIR__.'/category.php';
