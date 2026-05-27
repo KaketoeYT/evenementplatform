@@ -64,18 +64,20 @@
             </div>
         </section>
 
-        {{-- Over het platform --}}
-        <section class="bg-blue-600 rounded-[2rem] p-12 text-white overflow-hidden relative">
-            <div class="relative z-10 max-w-2xl">
-                <h2 class="text-4xl font-bold mb-6">Tickets regelen was nog nooit zo makkelijk.</h2>
-                <p class="text-blue-100 text-lg mb-8">Wij brengen fans en organisatoren samen op een platform dat werkt
-                    zoals jij dat wilt. Snel, veilig en zonder gedoe.</p>
-                <a href="{{ route('register') }}"
-                    class="inline-block bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold hover:bg-blue-50 transition-colors">Word
-                    organisator op Eventify</a>
-            </div>
-            <div class="absolute -right-20 -bottom-20 text-[300px] font-black text-white opacity-5 select-none">◈</div>
-        </section>
+        {{-- Organizer request --}}
+        @auth
+            <section class="bg-blue-600 rounded-[2rem] p-12 text-white overflow-hidden relative">
+                <div class="relative z-10 max-w-2xl">
+                    <h2 class="text-4xl font-bold mb-6">Tickets regelen was nog nooit zo makkelijk.</h2>
+                    <p class="text-blue-100 text-lg mb-8">Wij brengen fans en organisatoren samen op een platform dat werkt
+                        zoals jij dat wilt. Snel, veilig en zonder gedoe.</p>
+                    <a href="{{ route('organizer_request.index') }}"
+                        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold hover:bg-blue-50 transition-colors">Word
+                        organisator op Eventify</a>
+                </div>
+                <div class="absolute -right-20 -bottom-20 text-[300px] font-black text-white opacity-5 select-none">◈</div>
+            </section>
+        @endauth
 
     </div>
 </x-base-layout>
