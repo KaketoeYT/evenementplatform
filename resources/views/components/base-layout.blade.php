@@ -173,6 +173,7 @@
 
             <li><a href="{{ route('venues.index') }}">Venues</a></li>
 
+            {{-- ORGANIZER ROUTES --}}
             @auth
                 @if (auth()->user()->role === 'organizer')
                     <li>
@@ -185,6 +186,7 @@
                 @endif
             @endauth
 
+            {{-- ADMIN ROUTES --}}
             @auth
                 @if (auth()->user()->role === 'admin')
                     <li>
@@ -194,9 +196,14 @@
                     <li>
                         <a href="{{ route('admin.events.index') }}" class="cta">Events</a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('categories.index') }}" class="cta">Category</a>
+                    </li>
                 @endif
             @endauth
 
+            {{-- LOGGED IN ROUTES --}}
             @auth
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
@@ -204,6 +211,8 @@
                         <button type="submit" class="cta">Logout</button>
                     </form>
                 </li>
+
+                {{-- LOGGED OUT ROUTES --}}
             @else
                 <li>
                     <a href="{{ route('login') }}" class="cta">Login</a>
