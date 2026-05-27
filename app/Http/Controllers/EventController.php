@@ -137,12 +137,9 @@ public function store(EventStoreRequest $request)
         $ticket->rank = $request->rank;
         if ($ticket->rank === 'VIP') {
             $ticket->price = $request->entry_price * 2;
-        }
-        if ($ticket->rank === 'seated')
-            {
+        } elseif ($ticket->rank === 'seated') {
             $ticket->price = $request->entry_price * 0.75;
-        }
-        else {
+        } else {
             $ticket->price = $request->entry_price;
         }
         $ticket->event_id = $request->event_id;
