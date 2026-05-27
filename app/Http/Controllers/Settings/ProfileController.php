@@ -16,6 +16,7 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    
     public function edit(Request $request): View
     {
         return view('settings.profile', [
