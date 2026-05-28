@@ -4,7 +4,7 @@
         class="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 overflow-hidden">
         <div class="p-6">
             <div class="mb-3">
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ __('log in je account') }}</h1>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">{{ __('log hier in voor je account') }}</h1>
             </div>
 
             <form method="POST" action="{{ route('login') }}" class="space-y-3">
