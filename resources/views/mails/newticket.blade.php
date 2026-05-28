@@ -63,7 +63,14 @@
                                     <tr>
                                         <td style="padding-bottom: 8px; color: #6b7280; font-size: 14px;">Type</td>
                                         <td style="padding-bottom: 8px; font-weight: 600; font-size: 14px;">
-                                            {{ $ticket->rank }}</td>
+                                            @if ($ticket->rank === 'VIP')
+                                                <span style="background-color: #fbbf24; color: #78350f; padding: 2px 8px; border-radius: 4px; font-weight: 700;">VIP</span>
+                                            @elseif ($ticket->rank === 'seated')
+                                                Zittend
+                                            @else
+                                                Standaard
+                                            @endif
+                                        </td>
                                     </tr>
                                 </table>
 
@@ -85,10 +92,30 @@
                                     <td style="color: #6b7280;">Naam:</td>
                                     <td align="right"><strong>{{ $ticket->user->name }}</strong></td>
                                 </tr>
-                                <tr>
-                                    <td style="color: #6b7280;">Totaalprijs:</td>
-                                    <td align="right"><strong>€{{ number_format($ticket->price, 2) }}</strong></td>
-                                </tr>
+                                @if ($ticket->rank === 'VIP')
+                                    <tr>
+                                        <td style="color: #6b7280;">Standaard prijs:</td>
+                                        <td align="right"><strong style="text-decoration: line-through; color: #9ca3af;">€{{ number_format($ticket->event->entry_price, 2) }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6b7280;">VIP prijs (2x):</td>
+                                        <td align="right"><strong style="color: #026cdf; font-size: 16px;">€{{ number_format($ticket->price, 2) }}</strong></td>
+                                    </tr>
+                                @elseif ($ticket->rank === 'seated')
+                                    <tr>
+                                        <td style="color: #6b7280;">Standaard prijs:</td>
+                                        <td align="right"><strong style="text-decoration: line-through; color: #9ca3af;">€{{ number_format($ticket->event->entry_price, 2) }}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="color: #6b7280;">Zittend (0,75x):</td>
+                                        <td align="right"><strong style="color: #10b981;">€{{ number_format($ticket->price, 2) }}</strong></td>
+                                    </tr>
+                                @else
+                                    <tr>
+                                        <td style="color: #6b7280;">Totaalprijs:</td>
+                                        <td align="right"><strong>€{{ number_format($ticket->price, 2) }}</strong></td>
+                                    </tr>
+                                @endif
                             </table>
 
                             <div style="margin-top: 35px; text-align: center;">
