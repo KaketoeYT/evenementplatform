@@ -285,4 +285,24 @@ public function store(EventStoreRequest $request)
         return redirect()->route('events.show', $eventId)
             ->with('success', 'Gefeliciteerd! Je hebt je ticket succesvol geclaimd.');
     }
+    
+            public function mijntickets()
+            {
+                // Haal de ingelogde gebruiker op met al zijn gekoppelde events
+                $user = Auth::user();
+                
+                $events = Event::whereHas('tickets', function ($query) {
+                    $query->where('user_id', auth()->id());
+                })
+                ->orderBy('datetime', 'asc')
+                ->get();
+                // $events = $user->tickets()->with('event')->orderBy('event.datetime', 'asc')->get();
+
+          
+
+                // Stuur de events naar de Blade-view
+                return view('events.myevents', compact('events'));
+            }
+
 }
+        
