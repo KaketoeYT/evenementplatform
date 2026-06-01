@@ -41,6 +41,9 @@
             @endforeach
         </select><br><br>
 
+        <label for="capacity">Event Capacity (optional):</label>
+        <input type="number" name="capacity" id="capacity" min="1"><br><br>
+
         <!-- AANGEPAST: Dit is nu een echt bestandsveld geworden met de naam 'image' -->
         <label for="image">Event Image:</label>
         <input type="file" name="image" id="image" accept="image/*"><br><br>

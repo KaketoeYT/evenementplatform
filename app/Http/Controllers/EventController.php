@@ -52,25 +52,25 @@ class EventController extends Controller
         return view('events.create', compact('categories', 'venues'));
     }
 
-public function store(EventStoreRequest $request)
-{
-    // 1. Haal alle goedgekeurde tekstvelden op
-    $data = $request->validated();
+    public function store(EventStoreRequest $request)
+    {
+        // 1. Haal alle goedgekeurde tekstvelden op
+        $data = $request->validated();
 
-    // 2. Kijk RECHTSTREEKS in het request (omzeil de validatie-filter voor het bestand)
-    if ($request->hasFile('image')) {
-        // Sla de afbeelding op in de map 'storage/app/public/event_images'
-        $path = $request->file('image')->store('event_images', 'public');
-        
-        // Voeg het gegenereerde pad handmatig toe aan de data-array
-        $data['image_url'] = $path;
+        // 2. Kijk RECHTSTREEKS in het request (omzeil de validatie-filter voor het bestand)
+        if ($request->hasFile('image')) {
+            // Sla de afbeelding op in de map 'storage/app/public/event_images'
+            $path = $request->file('image')->store('event_images', 'public');
+
+            // Voeg het gegenereerde pad handmatig toe aan de data-array
+            $data['image_url'] = $path;
+        }
+
+        // 3. Maak het event aan in de database
+        Event::create($data);
+
+        return redirect()->route('events.index')->with('success', 'Event created successfully.');
     }
-
-    // 3. Maak het event aan in de database
-    Event::create($data);
-
-    return redirect()->route('events.index')->with('success', 'Event created successfully.');
-}
 
     public function edit(Event $event)
     {
@@ -100,7 +100,6 @@ public function store(EventStoreRequest $request)
 
         // Centrale registratie check
         if (!$event->canRegister()) {
-
             if ($event->registration_closed) {
                 return back()->with('error', 'Aanmelding gesloten');
             }
@@ -108,27 +107,16 @@ public function store(EventStoreRequest $request)
             if (now()->isAfter($event->datetime)) {
                 return back()->with('error', 'Het evenement is al begonnen.');
             }
-
-            if ($event->tickets()->count() >= $event->venue->capacity) {
-                return back()->with('error', 'Helaas, dit evenement is uitverkocht!');
-            }
         }
 
-
-        // bestaande capaciteit check
-        if ($event->tickets()->count() >= $event->venue->capacity) {
+        // Controleer capaciteit (geef voorrang aan event.capacity als die gezet is)
+        $limit = $event->capacity ?? ($event->venue->capacity ?? null);
+        if ($limit !== null && $event->tickets()->count() >= $limit) {
             return back()->with('error', 'Helaas, dit evenement is uitverkocht!');
         }
-        // 1. Zoek het evenement en de bijbehorende venue
-        $event = Event::with('venue')->findOrFail($request->event_id);
 
         // 2. Tel hoeveel tickets er al zijn voor dit evenement
         $currentTicketsCount = $event->tickets()->count();
-
-        // 3. Check of er nog plek is
-        if ($currentTicketsCount >= $event->venue->capacity) {
-            return redirect()->back()->with('error', 'Helaas, dit evenement is uitverkocht!');
-        }
 
 
         // 2. Data opslaan in de database
@@ -262,7 +250,8 @@ public function store(EventStoreRequest $request)
 
         // 2. Dubbele check: Is er nog wel plek? 
         // (Voor het geval iemand anders net het allerlaatste plekje heeft gepakt)
-        if ($event->tickets_count >= $event->venue->capacity) {
+        $limit = $event->capacity ?? ($event->venue->capacity ?? null);
+        if ($limit !== null && $event->tickets_count >= $limit) {
             return redirect()->route('events.show', $eventId)
                 ->with('error', 'Helaas, de beschikbare plek is inmiddels al door iemand anders geclaimd.');
         }

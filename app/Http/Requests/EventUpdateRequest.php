@@ -30,6 +30,7 @@ class EventUpdateRequest extends FormRequest
             'entry_price' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
             'venue_id' => 'required|exists:venues,id',
+            'capacity' => 'nullable|integer|min:1',
             'vip_active' => 'required|boolean',
             'seated_active' => 'required|boolean',
         ];

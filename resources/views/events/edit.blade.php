@@ -40,6 +40,9 @@
             @endforeach
         </select><br><br>
 
+        <label for="capacity">Event Capacity (optional):</label>
+        <input type="number" name="capacity" id="capacity" min="1" value="{{ old('capacity', $event->capacity) }}"><br><br>
+
         <label for="vip_active">VIP Tickets Actief:</label>
         <select name="vip_active" id="vip_active" required>
             <option value="1" @selected(old('vip_active', $event->vip_active) == true)>Yes</option>

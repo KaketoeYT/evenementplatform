@@ -16,6 +16,7 @@ class Event extends Model
         'registration_closed' => 'boolean',
         'vip_active' => 'boolean',
         'seated_active' => 'boolean',
+        'capacity' => 'integer',
 
     ];
 
@@ -27,6 +28,7 @@ class Event extends Model
         'entry_price',
         'category_id',
         'venue_id',
+        'capacity',
         'image_url',
         'vip_active',
         'seated_active'
@@ -59,8 +61,9 @@ class Event extends Model
             return false;
         }
 
-        // Venue vol
-        if ($this->tickets()->count() >= $this->venue->capacity) {
+        // Capaciteit vol (geef voorrang aan event.capacity, anders venue.capacity)
+        $limit = $this->capacity ?? ($this->venue->capacity ?? null);
+        if ($limit !== null && $this->tickets()->count() >= $limit) {
             return false;
         }
 
