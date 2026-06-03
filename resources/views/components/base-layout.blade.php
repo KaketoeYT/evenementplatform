@@ -185,6 +185,10 @@
                     <li>
                         <a href="{{ route('venues.create') }}" class="cta">+ Venue</a>
                     </li>
+
+                        <li>
+                        <a href="{{ route('org.events.index') }}" class="cta">Events</a>
+                    </li>
                 @endif
             @endauth
 
@@ -193,10 +197,6 @@
                 @if (auth()->user()->role === 'admin')
                     <li>
                         <a href="{{ route('administrator.user.view') }}" class="cta">Users</a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('admin.events.index') }}" class="cta">Events</a>
                     </li>
 
                     <li>
