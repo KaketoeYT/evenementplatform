@@ -70,6 +70,14 @@
 
         /* ───────── MAIN ───────── */
         main {
+            /* We halen max-width en padding hier weg zodat
+            secties zoals de Hero de volledige breedte kunnen pakken */
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* We maken een nieuwe container class voor de normale pagina's */
+        .content-container {
             max-width: 1150px;
             margin: 0 auto;
             padding: 3rem 1.5rem;
@@ -155,7 +163,7 @@
 
     {{-- NAV --}}
     <nav>
-        <a href="{{ route('events.index') }}" class="logo">
+        <a href="{{ route('home') }}" class="logo">
             ◈ <span>Event</span>ify
         </a>
 
@@ -165,6 +173,7 @@
 
             <li><a href="{{ route('venues.index') }}">Venues</a></li>
 
+            {{-- ORGANIZER ROUTES --}}
             @auth
                 @if (auth()->user()->role === 'organizer')
                     <li>
@@ -177,13 +186,41 @@
                 @endif
             @endauth
 
+            {{-- ADMIN ROUTES --}}
             @auth
+                @if (auth()->user()->role === 'admin')
+                    <li>
+                        <a href="{{ route('administrator.user.view') }}" class="cta">Users</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('admin.events.index') }}" class="cta">Events</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('categories.index') }}" class="cta">Category</a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('organizer_request.overview') }}" class="cta">Applications</a>
+                    </li>
+                @endif
+            @endauth
+
+            {{-- LOGGED IN ROUTES --}}
+            @auth
+                <li>
+                    <a href="{{ route('dashboard') }}">my profile</a>
+                </li>
+
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="cta">Logout</button>
                     </form>
                 </li>
+
+                {{-- LOGGED OUT ROUTES --}}
             @else
                 <li>
                     <a href="{{ route('login') }}" class="cta">Login</a>

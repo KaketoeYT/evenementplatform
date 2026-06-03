@@ -77,6 +77,27 @@ class DeelnemerTest extends TestCase
     }
 
     #[Test]
+    public function vip_ticket_heeft_dubbele_prijs(): void
+    {
+        Mail::fake();
+        $user = $this->makeUser();
+        $event = $this->createEvent();
+
+        $this->actingAs($user)->post(route('tickets.ticketstore'), [
+            'event_id' => $event->id,
+            'rank' => 'VIP',
+            'entry_price' => $event->entry_price,
+        ]);
+
+        $this->assertDatabaseHas('tickets', [
+            'event_id' => $event->id,
+            'user_id' => $user->id,
+            'rank' => 'VIP',
+            'price' => $event->entry_price * 2,
+        ]);
+    }
+
+    #[Test]
     public function bevestigingsmail_wordt_verstuurd_na_aanmelding(): void
     {
         Mail::fake();

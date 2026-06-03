@@ -6,7 +6,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Events | Ticketmaster Style</title>
+        <title>Events</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
         @if (session('success'))
@@ -69,7 +69,6 @@
             <section class="mb-5">
                 <div class="category-header d-flex justify-content-between align-items-end mb-4">
                     <h2 class="h3 fw-bold mb-0">{{ $category }}</h2>
-                    <a href="#" class="text-decoration-none fw-semibold" style="color: #026cdf;">View All</a>
                 </div>
 
                 <div class="row g-4">

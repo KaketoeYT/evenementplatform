@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateRoleRequest;
+use App\Mail\PasswordResetMail;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    
     public function edit(Request $request): View
     {
         return view('settings.profile', [
@@ -64,6 +68,7 @@ class ProfileController extends Controller
     public function user_view()
     {
         $users = User::all();
+
         return view('administrator.user_view', compact('users'));
     }
 
@@ -74,5 +79,29 @@ class ProfileController extends Controller
         }
 
         return redirect()->route('administrator.user.view')->with('status', 'Rollen bijgewerkt!');
+    }
+
+    public function deactivate_user($userId): RedirectResponse
+    {
+        $user = User::findOrFail($userId);
+        $user->status = $user->status === 'active' ? 'deactive' : 'active';
+        $user->save();
+
+        $action = $user->status === 'active' ? 'geactiveerd' : 'gedeactiveerd';
+
+        return redirect()->route('administrator.user.view')->with('status', 'Gebruiker '.$action.'!');
+    }
+
+    public function sendPasswordResetMail($userId): RedirectResponse
+    {
+        $user = User::findOrFail($userId);
+
+        // Genereer een reset token
+        $token = Password::createToken($user);
+
+        // Verstuur de mail
+        Mail::to($user->email)->send(new PasswordResetMail($token, $user->email));
+
+        return redirect()->route('administrator.user.view')->with('status', 'Wachtwoord reset mail verstuurd naar '.$user->email);
     }
 }
