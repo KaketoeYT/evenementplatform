@@ -26,18 +26,15 @@ class OrganizerRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(OrganizerRequest $organizerRequest)
     {
-        $validated = $request->validate([
-            'organization_name' => ['nullable', 'string', 'max:255'],
-            'event_type'        => ['required', 'string', 'max:255'],
-            'website'           => ['nullable', 'url', 'max:255'],
-            'experience'        => ['nullable', 'string'],
-            'motivation'        => ['required', 'string'],
+
+        Application::create([
+            // add user to store
+            ...$organizerRequest->validated(),
+            'user_id' => auth()->id(),
         ]);
-
-        Application::create($validated);
-
+        
         return redirect()
             ->route('organizer_request.index')
             ->with('success', 'Aanvraag succesvol verstuurd.');
@@ -54,19 +51,44 @@ class OrganizerRequestController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Aanvraag goedkeuren
      */
-    public function update(Request $request, OrganizerRequest $organizerRequest)
+    public function approve(Application $application)
     {
-        $validated = $request->validate([
-            'organization_name' => ['nullable', 'string', 'max:255'],
-            'event_type'        => ['required', 'string', 'max:255'],
-            'website'           => ['nullable', 'url', 'max:255'],
-            'experience'        => ['nullable', 'string'],
-            'motivation'        => ['required', 'string'],
+        $application->user->update([
+            'role' => 'organizer',
         ]);
 
-        $organizerRequest->update($validated);
+        $application->update([
+            'status' => 'approved',
+        ]);
+
+        return redirect()
+            ->back()
+            ->with('success', 'Aanvraag goedgekeurd.');
+    }
+
+    /**
+     * Aanvraag afwijzen
+     */
+    public function reject(Application $application)
+    {
+        $application->update([
+            'status' => 'rejected',
+        ]);
+
+        return redirect()
+            ->back()
+            ->with('success', 'Aanvraag afgewezen.');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(OrganizerRequest $organizerRequest)
+    {
+
+        $organizerRequest->update($organizerRequest->validated());
 
         return redirect()
             ->route('organizer_request.index')
@@ -76,9 +98,9 @@ class OrganizerRequestController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrganizerRequest $organizerRequest)
+    public function destroy(Application $application)
     {
-        $organizerRequest->delete();
+        $application->delete();
 
         return redirect()
             ->route('organizer_request.index')

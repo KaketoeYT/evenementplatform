@@ -42,6 +42,8 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
     Route::delete('administrator/application_view', [OrganizerRequestController::class, 'destroy'])->name('organizer_request.destroy');
 });
 
+// Unauthorized routes
+
 Route::get('/attendees', [AttendeeController::class, 'index'])
     ->name('attendee.index');
 

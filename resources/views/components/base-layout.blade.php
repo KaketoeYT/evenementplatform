@@ -173,8 +173,6 @@
 
             <li><a href="{{ route('venues.index') }}">Venues</a></li>
 
-            <li><a href="{{ route('dashboard') }}">my profile</a></li>
-
             {{-- ORGANIZER ROUTES --}}
             @auth
                 @if (auth()->user()->role === 'organizer')
@@ -202,11 +200,19 @@
                     <li>
                         <a href="{{ route('categories.index') }}" class="cta">Category</a>
                     </li>
+
+                    <li>
+                        <a href="{{ route('organizer_request.overview') }}" class="cta">Applications</a>
+                    </li>
                 @endif
             @endauth
 
             {{-- LOGGED IN ROUTES --}}
             @auth
+                <li>
+                    <a href="{{ route('dashboard') }}">my profile</a>
+                </li>
+
                 <li>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
