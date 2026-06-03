@@ -19,6 +19,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/event/afmelden', [EventController::class, 'afmelden'])->name('event.afmelden');
     Route::post('/event/{event}/favorite', [EventController::class, 'favorite'])->name('event.favorite');
     Route::post('/events/{event}/queue', [EventController::class, 'joinQueue'])->name('event.queue')->middleware('auth');
+    Route::get('/mijn-tickets', [EventController::class, 'mijntickets'])->name('tickets.mijntickets');
     Route::get('/claim-ticket/{event}/{user}', [EventController::class, 'claim'])
     ->name('event.claim')
     ->middleware('signed');
