@@ -40,7 +40,7 @@
             @endforeach
         </select><br><br>
 
-        <label for="vip_active">VIP Tickets Actief:</label>
+        <label for="vip_active">VIP Tickets Active:</label>
         <select name="vip_active" id="vip_active" required>
             <option value="1" @selected(old('vip_active', $event->vip_active) == true)>Yes</option>
             <option value="0" @selected(old('vip_active', $event->vip_active) == false)>No</option>

@@ -10,10 +10,10 @@
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="border border-gray-300 px-4 py-2 text-left">Ticket Nummer</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Naam</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Name</th>
                         <th class="border border-gray-300 px-4 py-2 text-left">Email</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Rang</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Prijs</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Rank</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Price</th>
                     </tr>
                 </thead>
                 <tbody>

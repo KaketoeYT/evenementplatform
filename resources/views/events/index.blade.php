@@ -51,7 +51,7 @@
 
                                     <button type="submit" class="btn btn-outline-danger"
                                         onclick="return confirm('Weet je zeker dat je je plek voor dit evenement wilt opgeven?')">
-                                        Afmelden
+                                       Sign off
                                     </button>
                                 </form>
                     @endif
