@@ -10,6 +10,7 @@ use App\Http\Requests\EventUpdateRequest;
 use App\Mail\QueueInvitation;
 use App\Models\Queues;
 use App\Mail\NewTicketMail;
+use App\Models\Favorite;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
@@ -34,6 +35,32 @@ class EventController extends Controller
             ->get();
 
         return view('events.index', compact('eventsByCategory', 'myTickets'));
+    }
+
+    public function favorite($eventId)
+    {
+        $event = Event::findOrFail($eventId);
+        $user = auth()->user();
+
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        $favorite = Favorite::where('user_id', $user->id)
+            ->where('event_id', $event->id)
+            ->first();
+
+        if ($favorite) {
+            $favorite->delete();
+            return back()->with('success', 'Event removed from favorites!');
+        }
+
+        Favorite::create([
+            'user_id' => $user->id,
+            'event_id' => $event->id,
+        ]);
+
+        return back()->with('success', 'Event added to favorites!');
     }
 
     public function index_admin()
@@ -155,8 +182,16 @@ public function store(EventStoreRequest $request)
 
     public function show($id)
     {
+        // check if the user has favorited this event
+        $isFavorited = false;
+        if (Auth::check()) {
+            $isFavorited = Favorite::where('user_id', Auth::id())
+                ->where('event_id', $id)
+                ->exists();
+        }
+
         $event = Event::with('venue')->withCount('tickets')->findOrFail($id);
-        return view('events.show', compact('event'));
+        return view('events.show', compact('event', 'isFavorited'));
     }
 
     public function afmelden(Request $request)
@@ -285,4 +320,24 @@ public function store(EventStoreRequest $request)
         return redirect()->route('events.show', $eventId)
             ->with('success', 'Gefeliciteerd! Je hebt je ticket succesvol geclaimd.');
     }
+    
+            public function mijntickets()
+            {
+                // Haal de ingelogde gebruiker op met al zijn gekoppelde events
+                $user = Auth::user();
+                
+                $events = Event::whereHas('tickets', function ($query) {
+                    $query->where('user_id', auth()->id());
+                })
+                ->orderBy('datetime', 'asc')
+                ->get();
+                // $events = $user->tickets()->with('event')->orderBy('event.datetime', 'asc')->get();
+
+          
+
+                // Stuur de events naar de Blade-view
+                return view('events.myevents', compact('events'));
+            }
+
 }
+        

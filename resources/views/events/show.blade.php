@@ -1,10 +1,11 @@
 <x-base-layout>
+
     <head>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <!-- Bootstrap Icons voor mooie, strakke icoontjes -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-        
+
         <style>
             body {
                 font-family: 'Inter', sans-serif;
@@ -25,8 +26,10 @@
             .event-image-wrapper img {
                 width: 100%;
                 height: auto;
-                max-height: 500px; /* Voorkomt dat verticale foto's het hele scherm overnemen */
-                object-fit: contain; /* Zorgt dat de afbeelding NOOIT wordt afgesneden */
+                max-height: 500px;
+                /* Voorkomt dat verticale foto's het hele scherm overnemen */
+                object-fit: contain;
+                /* Zorgt dat de afbeelding NOOIT wordt afgesneden */
                 display: block;
             }
 
@@ -81,7 +84,7 @@
                 color: white;
                 transform: translateY(-1px);
             }
-            
+
             .btn-ticketmaster:active {
                 transform: translateY(1px);
             }
@@ -111,7 +114,8 @@
     <div class="container py-5">
         {{-- Flash Messages --}}
         @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4 p-3 rounded-3" role="alert">
+            <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm mb-4 p-3 rounded-3"
+                role="alert">
                 <i class="bi bi-check-circle-fill me-2"></i> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -119,7 +123,8 @@
 
         {{-- Navigatie bovenin --}}
         <div class="mb-4">
-            <a href="{{ route('events.index') }}" class="text-decoration-none small fw-bold d-inline-flex align-items-center" style="color: #026cdf;">
+            <a href="{{ route('events.index') }}"
+                class="text-decoration-none small fw-bold d-inline-flex align-items-center" style="color: #026cdf;">
                 <i class="bi bi-arrow-left me-2"></i> BACK TO EVENTS
             </a>
         </div>
@@ -127,9 +132,9 @@
         <div class="row g-4">
             {{-- Linker Kant: Event Details --}}
             <div class="col-lg-8">
-                
+
                 {{-- Prachtige, responsive afbeelding container --}}
-                @if($event->image_url)
+                @if ($event->image_url)
                     <div class="event-image-wrapper shadow-sm mb-4">
                         <img src="{{ asset('storage/' . $event->image_url) }}" alt="{{ $event->title }}">
                     </div>
@@ -174,24 +179,43 @@
 
                     {{-- Extra meta-informatie badges --}}
                     <div class="d-flex flex-wrap gap-2 mt-4">
-                        <span class="badge bg-light text-dark border p-2 px-3 rounded-pill d-inline-flex align-items-center">
+                        <span
+                            class="badge bg-light text-dark border p-2 px-3 rounded-pill d-inline-flex align-items-center">
                             <i class="bi bi-clock me-2 text-primary"></i> Duration: {{ $event->duration }} min
                         </span>
-                        @if($event->category)
-                            <span class="badge bg-light text-dark border p-2 px-3 rounded-pill d-inline-flex align-items-center">
+                        @if ($event->category)
+                            <span
+                                class="badge bg-light text-dark border p-2 px-3 rounded-pill d-inline-flex align-items-center">
                                 <i class="bi bi-tags me-2 text-primary"></i> {{ $event->category->name }}
                             </span>
                         @endif
+                    </div>
+
+                    <div class="mt-5 pt-4 border-top d-flex gap-3">
+                        <form action="{{ route('event.favorite', $event->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            @if ($isFavorited)
+                                <button type="submit" class="btn btn-success px-4 rounded-3 fw-medium">
+                                    <i class="bi bi-heart-fill me-2"></i>Favorited
+                                </button>
+                            @else
+                                <button type="submit" class="btn btn-outline-secondary px-4 rounded-3 fw-medium">
+                                    <i class="bi bi-heart me-2"></i>Favorite
+                                </button>
+                            @endif
+                        </form>
                     </div>
 
                     {{-- Beheeropties voor Organizers --}}
                     @auth
                         @if (auth()->user()->role == 'organizer')
                             <div class="mt-5 pt-4 border-top d-flex gap-3">
-                                <a href="{{ route('events.edit', $event->id) }}" class="btn btn-outline-secondary px-4 rounded-3 fw-medium">
+                                <a href="{{ route('events.edit', $event->id) }}"
+                                    class="btn btn-outline-secondary px-4 rounded-3 fw-medium">
                                     <i class="bi bi-pencil me-2"></i>Edit Event
                                 </a>
-                                <form method="POST" action="{{ route('events.destroy', $event->id) }}" onsubmit="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?');">
+                                <form method="POST" action="{{ route('events.destroy', $event->id) }}"
+                                    onsubmit="return confirm('Weet je zeker dat je dit evenement wilt verwijderen?');">
                                     @csrf @method('DELETE')
                                     <button type="submit" class="btn btn-outline-danger px-4 rounded-3 fw-medium">
                                         <i class="bi bi-trash me-2"></i>Delete
@@ -235,40 +259,40 @@
                                 </button>
                             </form>
 
-                    @if ($event->vip_active)
-                    <div class="mb-4">
-                        <div class="info-label mb-1">PRICE FOR VIP</div>
-                        <div class="price-large">€{{ number_format($event->entry_price *2, 2, ',', '.') }}</div>
-                    </div>
+                            @if ($event->vip_active)
+                                <div class="mb-4">
+                                    <div class="info-label mb-1">PRICE FOR VIP</div>
+                                    <div class="price-large">€{{ number_format($event->entry_price * 2, 2, ',', '.') }}
+                                    </div>
+                                </div>
 
-                            <form action="{{ route('tickets.ticketstore') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="event_id" value="{{ $event->id }}">
-                                <input type="hidden" name="rank" value="VIP">
-                                <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
-                                <button type="submit" class="btn btn-ticketmaster shadow-sm mb-3">
-                                    GET VIP TICKETS
-                                </button>
-                            </form>
-                    @endif
+                                <form action="{{ route('tickets.ticketstore') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                    <input type="hidden" name="rank" value="VIP">
+                                    <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
+                                    <button type="submit" class="btn btn-ticketmaster shadow-sm mb-3">
+                                        GET VIP TICKETS
+                                    </button>
+                                </form>
+                            @endif
 
-                    @if ($event->seated_active)
-                    <div class="mb-4">
-                        <div class="info-label mb-1">PRICE FOR SEATED</div>
-                        <div class="price-large">€{{ number_format($event->entry_price *.75, 2, ',', '.') }}</div>
-                    </div>
-                            <form action="{{ route('tickets.ticketstore') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="event_id" value="{{ $event->id }}">
-                                <input type="hidden" name="rank" value="seated">
-                                <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
-                                <button type="submit" class="btn btn-ticketmaster shadow-sm mb-3">
-                                    GET SEATED TICKETS
-                                </button>
-                            </form>
-                    @endif
-
-
+                            @if ($event->seated_active)
+                                <div class="mb-4">
+                                    <div class="info-label mb-1">PRICE FOR SEATED</div>
+                                    <div class="price-large">
+                                        €{{ number_format($event->entry_price * 0.75, 2, ',', '.') }}</div>
+                                </div>
+                                <form action="{{ route('tickets.ticketstore') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                    <input type="hidden" name="rank" value="seated">
+                                    <input type="hidden" name="entry_price" value="{{ $event->entry_price }}">
+                                    <button type="submit" class="btn btn-ticketmaster shadow-sm mb-3">
+                                        GET SEATED TICKETS
+                                    </button>
+                                </form>
+                            @endif
                         @else
                             <button class="btn btn-secondary w-100 py-3 mb-2 rounded-3" disabled>
                                 <i class="bi bi-lock-fill me-2"></i>REGISTRATION CLOSED
@@ -278,7 +302,8 @@
 
                     @auth
                         @if (auth()->user()->role == 'organizer')
-                            <a href="{{ route('attendee.index') }}" class="btn btn-link w-100 text-decoration-none text-muted small mt-3 fw-medium d-inline-flex align-items-center justify-content-center">
+                            <a href="{{ route('attendee.index') }}"
+                                class="btn btn-link w-100 text-decoration-none text-muted small mt-3 fw-medium d-inline-flex align-items-center justify-content-center">
                                 <i class="bi bi-people me-2"></i> View Attendees
                             </a>
                         @endif
@@ -288,3 +313,4 @@
         </div>
     </div>
 </x-base-layout>
+
