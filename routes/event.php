@@ -10,7 +10,7 @@ Route::middleware(['auth', 'check.role:user'])->group(function () {
 
 // Routes ONLY for admin user.
 Route::middleware(['auth', 'check.role:admin,organizer'])->group(function () {
-    Route::get('/administrator/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+    Route::get('/organizer/events', [EventController::class, 'index_admin'])->name('org.events.index');
 });
 
 // Routes for every inlogged user.

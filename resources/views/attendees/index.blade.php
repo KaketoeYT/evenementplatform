@@ -51,8 +51,8 @@
     <div class="container py-5">
         <header class="mb-4 d-flex justify-content-between align-items-center">
             <div>
-                <h1 class="fw-bold h3 mb-1">Gebruikersbeheer</h1>
-                <p class="text-muted small">Overzicht van alle geregistreerde bezoekers en hun tickets</p>
+                <h1 class="fw-bold h3 mb-1">User Management</h1>
+                <p class="text-muted small">Overview of all registered attendees and their tickets</p>
             </div>
         </header>
 
@@ -62,10 +62,10 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Gebruiker</th>
-                            <th>Contactgegevens</th>
+                            <th>User</th>
+                            <th>Contact Information</th>
                             <th class="text-center">Tickets</th>
-                            <th>Actieve Reserveringen</th>
+                            <th>Active Reservations</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,14 +101,14 @@
                                             </form>
                                         </div>
                                     @empty
-                                        <span class="text-muted small italic">Geen actieve tickets</span>
+                                        <span class="text-muted small italic">No active tickets</span>
                                     @endforelse
                                 </td>
                             </tr>
                         @empty
                             <tr>
                                 <td colspan="5" class="text-center py-5 text-muted">
-                                    Geen gebruikers gevonden in de database.
+                                    No users found in the database.
                                 </td>
                             </tr>
                         @endforelse

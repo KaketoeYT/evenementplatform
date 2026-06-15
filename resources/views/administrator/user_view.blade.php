@@ -7,14 +7,14 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Naam</th>
+                    <th>Name</th>
                     <th>Password</th>
                     <th>Email</th>
                     <th>Rol</th>
                     <th>Status</th>
-                    <th>Telefoonnummer</th>
-                    <th>Stad</th>
-                    <th>Land</th>
+                    <th>Phonenumber</th>
+                    <th>City</th>
+                    <th>Country</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,8 +22,7 @@
                     <tr>
                         <td>{{ $user->id }}</td>
                         <td>{{ $user->name }}</td>
-                        <td><a href="{{ route('mails.password_reset', $user->id) }}" class="btn btn-sm btn-warning">Reset
-                                mail versturen</a></td>
+                        <td><a href="{{ route('mails.password_reset', $user->id) }}" class="btn btn-sm btn-warning">Send reset e-mail</a></td>
                         <td>{{ $user->email }}</td>
                         <td>
                             <select name="roles[{{ $user->id }}]">
@@ -46,12 +45,12 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="9">Geen gebruikers gevonden</td>
+                        <td colspan="9">No users found</td>
                     </tr>
                 @endforelse
             </tbody>
         </table>
-        <button type="submit">Opslaan</button>
+        <button type="submit">Save</button>
     </form>
 
     <script>

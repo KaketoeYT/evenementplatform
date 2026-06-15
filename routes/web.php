@@ -50,4 +50,4 @@ require __DIR__ . '/rapport.php';
 require __DIR__ . '/attendee.php';
 require __DIR__ . '/eventrequest.php';
 require __DIR__ . '/organizer_request.php';
-require __DIR__.'/category.php';
+require __DIR__ . '/category.php';
