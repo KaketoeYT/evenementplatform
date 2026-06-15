@@ -9,14 +9,6 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrganizerRequestController;
 
-// TEST
-Route::get('/organizer_request', [OrganizerRequestController::class, 'index'])->name('organizer_request.index');
-
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-
-
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -47,13 +39,10 @@ Route::get('/attendees', [AttendeeController::class, 'index'])
 
 Route::post('/events/{event}/toggle-registration', [EventController::class, 'toggleRegistration'])->name('events.toggleRegistration');
 
-Route::post('administrator/user_deactivate/{userId}', [Settings\ProfileController::class, 'deactivate_user'])->name('administrator.user.deactivate');
-Route::get('mails/password_reset/{userId}', [Settings\ProfileController::class, 'sendPasswordResetMail'])->name('mails.password_reset');
-
 require __DIR__ . '/auth.php';
 require __DIR__ . '/event.php';
 require __DIR__ . '/venue.php';
 require __DIR__ . '/rapport.php';
 require __DIR__ . '/attendee.php';
 require __DIR__ . '/organizer_request.php';
-require __DIR__.'/category.php';
+require __DIR__ . '/category.php';
