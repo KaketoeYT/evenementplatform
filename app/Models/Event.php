@@ -29,7 +29,8 @@ class Event extends Model
         'venue_id',
         'image_url',
         'vip_active',
-        'seated_active'
+        'seated_active',
+        'organizer_id',
     ];
 
     public function category()

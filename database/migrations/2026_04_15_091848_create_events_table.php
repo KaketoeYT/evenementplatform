@@ -21,12 +21,9 @@ return new class extends Migration
             $table->decimal('entry_price', 10, 2);
             $table->string('image_url')->nullable(); // Nu mag de kolom ook leeg blijven
 
-            
-            $table->foreignId('venue_id')
-                ->constrained()
-                ->onDelete('cascade');
-
+            $table->foreignId('venue_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->foreignId('organizer_id')->constrained('users')->onDelete('cascade');
         });
     }
 
