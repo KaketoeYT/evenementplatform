@@ -65,7 +65,17 @@ class EventController extends Controller
 
     public function index_admin()
     {
-        $events = Event::with('category', 'venue')->get();
+        $user = auth()->user();
+
+        if ($user && $user->role === 'organizer') {
+            // Organizers see only events they created
+            $events = Event::with('category', 'venue')
+                ->where('organizer_id', $user->id)
+                ->get();
+        } else {
+            // Admins see all events
+            $events = Event::with('category', 'venue')->get();
+        }
 
         return view('events.index_admin', compact('events'));
     }

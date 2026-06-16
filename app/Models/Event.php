@@ -48,6 +48,11 @@ class Event extends Model
         return $this->hasMany(Ticket::class);
     }
 
+    public function organizer()
+    {
+        return $this->belongsTo(User::class, 'organizer_id');
+    }
+
     public function canRegister()
     {
         // Aanmelding handmatig gesloten

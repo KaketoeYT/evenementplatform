@@ -19,15 +19,17 @@ class DashboardController extends Controller
 
         // Haal wachtrij-inschrijvingen op en bereken positie
         $queues = Queues::where('user_id', $user->id)
-                    ->with('event')
-                    ->get()
-                    ->map(function ($queue) {
-                        $queue->position = Queues::where('event_id', $queue->event_id)
-                            ->where('created_at', '<', $queue->created_at)
-                            ->count() + 1;
-                        return $queue;
-                    });
+            ->with('event')
+            ->get()
+            ->map(function ($queue) {
+                $queue->position = Queues::where('event_id', $queue->event_id)
+                    ->where('created_at', '<', $queue->created_at)
+                    ->count() + 1;
+                return $queue;
+            });
 
-        return view('dashboard', compact('user', 'tickets', 'queues'));
+        $favorites = $user->favorites()->with('event')->get();
+
+        return view('dashboard', compact('user', 'tickets', 'queues', 'favorites'));
     }
 }
