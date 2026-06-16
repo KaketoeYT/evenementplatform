@@ -39,7 +39,6 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
 });
 
 
-Route::post('/events/{event}/toggle-registration', [EventController::class, 'toggleRegistration'])->name('events.toggleRegistration');
 
 Route::get('mails/password_reset/{userId}', [Settings\ProfileController::class, 'sendPasswordResetMail'])->name('mails.password_reset');
 
@@ -48,5 +47,6 @@ require __DIR__ . '/event.php';
 require __DIR__ . '/venue.php';
 require __DIR__ . '/rapport.php';
 require __DIR__ . '/attendee.php';
+require __DIR__ . '/eventrequest.php';
 require __DIR__ . '/organizer_request.php';
-require __DIR__.'/category.php';
+require __DIR__ . '/category.php';

@@ -10,7 +10,7 @@ Route::middleware(['auth', 'check.role:user'])->group(function () {
 
 // Routes ONLY for admin user.
 Route::middleware(['auth', 'check.role:admin,organizer'])->group(function () {
-    Route::get('/administrator/events', [EventController::class, 'index_admin'])->name('admin.events.index');
+    Route::get('/organizer/events', [EventController::class, 'index_admin'])->name('org.events.index');
 });
 
 // Routes for every inlogged user.
@@ -33,6 +33,8 @@ Route::middleware(['auth', 'check.role:organizer'])->group(function () {
     Route::put('/events/{event}', [EventController::class, 'update'])->name('events.update');
     Route::delete('/events/{event}', [EventController::class, 'destroy'])->name('events.destroy');
     Route::get('/events/{event}/show_user', [EventController::class, 'show_user'])->name('event.show.user');
+    Route::post('/events/{event}/toggle-registration', [EventController::class, 'toggleRegistration'])->name('events.toggleRegistration');
+
 });
 
 // Routes for every user, including guests.

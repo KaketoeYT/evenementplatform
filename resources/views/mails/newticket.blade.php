@@ -25,9 +25,9 @@
                             </div>
                             <h1
                                 style="margin:0; font-size: 28px; font-weight: 700; color: #000000; letter-spacing: -0.02em;">
-                                Je bent erbij, {{ $ticket->user->name }}!
+                                You are registered, {{ $ticket->user->name }}!
                             </h1>
-                            <p style="margin:10px 0 0; color: #6b7280; font-size: 16px;">Bedankt voor je reservering via
+                            <p style="margin:10px 0 0; color: #6b7280; font-size: 16px;">Thank you for your reservation via
                                 Eventify.</p>
                         </td>
                     </tr>
@@ -120,11 +120,11 @@
 
                             <div style="margin-top: 35px; text-align: center;">
                                 <p style="font-size: 14px; color: #4b5563;">
-                                    Dit is je officiële toegangsbewijs. Toon deze mail bij de ingang.
+                                    This is your official pass. Show this email at the entrance.
                                 </p>
                                 <a href="#"
-                                    style="display: inline-block; background-color: #026cdf; color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 10px;">Bekijk
-                                    in je account</a>
+                                    style="display: inline-block; background-color: #026cdf; color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 10px;">View
+                                    in your account</a>
                             </div>
 
                         </td>
@@ -134,8 +134,8 @@
                     <tr>
                         <td
                             style="background:#f9fafb; padding:25px; text-align:center; font-size:12px; color:#9ca3af; border-top: 1px solid #e5e7eb;">
-                            © {{ date('Y') }} Eventify — Alle rechten voorbehouden<br>
-                            <span style="display: inline-block; margin-top: 10px;">Vragen? Neem contact op met onze
+                            © {{ date('Y') }} Eventify — All rights reserved<br>
+                            <span style="display: inline-block; margin-top: 10px;">Questions? Contact our
                                 support.</span>
                         </td>
                     </tr>

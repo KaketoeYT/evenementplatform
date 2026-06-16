@@ -5,11 +5,11 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
             <div>
                 <h1 class="text-4xl font-black text-slate-950 tracking-tight">
-                    Organizer Requests
+                    Eventaanvragen
                 </h1>
 
                 <p class="text-slate-500 mt-2 text-lg">
-                    Overview of all incoming requests.
+                    Overzicht van alle binnengekomen event aanvragen.
                 </p>
             </div>
         </div>
@@ -33,32 +33,27 @@
                             <tr>
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Organization
+                                    Naam
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Event Type
+                                    Omschrijving
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Website
+                                    Gebruiker
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Experience
-                                </th>
-
-                                <th
-                                    class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Date
+                                    Locatie
                                 </th>
 
                                 <th
                                     class="text-right px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Actions
+                                    Acties
                                 </th>
                             </tr>
                         </thead>
@@ -68,55 +63,39 @@
                             @foreach ($requests as $request)
                                 <tr class="hover:bg-slate-50 transition-all">
 
-                                    <!-- Organisatie -->
+                                    <!-- Naam -->
                                     <td class="px-6 py-6">
                                         <div class="font-bold text-slate-900">
-                                            {{ $request->organization_name }}
-                                        </div>
-
-                                        <div class="text-sm text-slate-500 mt-1 line-clamp-2">
-                                            {{ Str::limit($request->motivation, 80) }}
+                                            {{ $request->name }}
                                         </div>
                                     </td>
 
-                                    <!-- Event Type -->
-                                    <td class="px-6 py-6">
-                                        <span
-                                            class="inline-flex px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-sm font-semibold">
-                                            {{ $request->event_type }}
-                                        </span>
-                                    </td>
-
-                                    <!-- Website -->
-                                    <td class="px-6 py-6">
-                                        @if ($request->website)
-                                            <a href="{{ $request->website }}" target="_blank"
-                                                class="text-blue-600 hover:text-blue-800 font-medium underline underline-offset-4">
-                                                Bekijken
-                                            </a>
-                                        @else
-                                            <span class="text-slate-400">Geen website</span>
-                                        @endif
-                                    </td>
-
-                                    <!-- Ervaring -->
+                                    <!-- Omschrijving -->
                                     <td class="px-6 py-6 max-w-xs">
                                         <p class="text-slate-600 text-sm leading-relaxed">
-                                            {{ Str::limit($request->experience, 90) ?: 'Geen ervaring ingevuld' }}
+                                            {{ Str::limit($request->description, 90) ?: 'Geen omschrijving ingevuld' }}
                                         </p>
                                     </td>
 
-                                    <!-- Datum -->
+                                    <!-- Gebruiker -->
                                     <td class="px-6 py-6 text-slate-500 text-sm whitespace-nowrap">
-                                        {{ $request->created_at->format('d M Y') }}
+                                        {{ $request->user->name ?? 'Onbekend' }}
+                                    </td>
+
+                                    <!-- Locatie -->
+                                    <td class="px-6 py-6 text-slate-500 text-sm whitespace-nowrap">
+                                        {{ $request->venue->name ?? 'Geen locatie' }}
                                     </td>
 
                                     <!-- Acties -->
                                     <td class="px-6 py-6">
                                         <div class="flex items-center justify-end gap-3">
+                                            <a href="{{ route('eventrequests.show', $request->id) }}"
+                                                class="text-blue-600 hover:underline font-medium">
+                                                Bekijken
+                                            </a>
 
-                                            <form method="POST"
-                                                action="{{ route('organizer_request.destroy', $request) }}"
+                                            <form method="POST" action="{{ route('eventrequests.destroy', $request) }}"
                                                 onsubmit="return confirm('Weet je zeker dat je deze aanvraag wilt verwijderen?')">
                                                 @csrf
                                                 @method('DELETE')
@@ -126,18 +105,8 @@
                                                     Verwijderen
                                                 </button>
                                             </form>
-
                                         </div>
                                     </td>
-
-                                    {{-- Show  --}}
-                                    <td class="p-4">
-                                        <a href="{{ route('organizer_request.show', $request->id) }}"
-                                            class="text-blue-600 hover:underline">
-                                            View
-                                        </a>
-                                    </td>
-
                                 </tr>
                             @endforeach
 
@@ -152,11 +121,11 @@
                     </div>
 
                     <h2 class="text-2xl font-bold text-slate-900 mb-2">
-                        No organizer requests yet
+                        Geen aanvragen gevonden
                     </h2>
 
                     <p class="text-slate-500 max-w-md">
-                        There are currently no organizer requests incoming.
+                        Er zijn momenteel nog geen event aanvragen binnengekomen.
                     </p>
                 </div>
 

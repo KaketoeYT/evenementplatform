@@ -2,14 +2,14 @@
     <section class="bg-slate-50 border-b border-slate-200 py-20 lg:py-32 w-full">
         <div class="max-w-[1150px] mx-auto px-6">
             <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
-                Vind je volgende <br><span class="text-blue-600">onvergetelijke ervaring.</span>
+                Find your next <br><span class="text-blue-600">unforgettable experience.</span>
             </h1>
             <p class="text-xl text-slate-600 mb-10 max-w-xl">
-                Ontdek en reserveer je plek voor de meest populaire evenementen van dit moment.
+                Discover and book your spot for the most popular events of the moment.
             </p>
             <div class="flex gap-4">
                 <a href="{{ route('events.index') }}"
-                    class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-200">Bekijk
+                    class="px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-200">View
                     Events</a>
             </div>
         </div>
@@ -20,7 +20,7 @@
 
         {{-- Populaire Events --}}
         <section id="events" class="mb-20">
-            <h2 class="text-3xl font-bold mb-8 text-slate-900">Populaire Events</h2>
+            <h2 class="text-3xl font-bold mb-8 text-slate-900">Popular Events</h2>
 
             {{-- Grid: Altijd 3 naast elkaar op desktop --}}
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -68,12 +68,12 @@
         @auth
             <section class="bg-blue-600 rounded-[2rem] p-12 text-white overflow-hidden relative">
                 <div class="relative z-10 max-w-2xl">
-                    <h2 class="text-4xl font-bold mb-6">Tickets regelen was nog nooit zo makkelijk.</h2>
-                    <p class="text-blue-100 text-lg mb-8">Wij brengen fans en organisatoren samen op een platform dat werkt
-                        zoals jij dat wilt. Snel, veilig en zonder gedoe.</p>
+                    <h2 class="text-4xl font-bold mb-6">Booking tickets has never been easier.</h2>
+                    <p class="text-blue-100 text-lg mb-8">We bring fans and organizers together on a platform that works
+                        the way you want it to. Fast, secure, and hassle-free.</p>
                     <a href="{{ route('organizer_request.index') }}"
-                        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold hover:bg-blue-50 transition-colors">Word
-                        organisator op Eventify</a>
+                        class="inline-block bg-white text-blue-600 px-8 py-4 rounded-2xl font-bold hover:bg-blue-50 transition-colors">Become
+                        an organizer on Eventify</a>
                 </div>
                 <div class="absolute -right-20 -bottom-20 text-[300px] font-black text-white opacity-5 select-none">◈</div>
             </section>
