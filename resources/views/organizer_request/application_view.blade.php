@@ -5,11 +5,11 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
             <div>
                 <h1 class="text-4xl font-black text-slate-950 tracking-tight">
-                    Organisator Aanvragen
+                    Organizer Requests
                 </h1>
 
                 <p class="text-slate-500 mt-2 text-lg">
-                    Overzicht van alle binnengekomen aanvragen.
+                    Overview of all incoming requests.
                 </p>
             </div>
         </div>
@@ -33,12 +33,12 @@
                             <tr>
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Organisatie
+                                    Organization
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Evenement Type
+                                    Event Type
                                 </th>
 
                                 <th
@@ -48,17 +48,17 @@
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Ervaring
+                                    Experience
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Datum
+                                    Date
                                 </th>
 
                                 <th
                                     class="text-right px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Acties
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
@@ -134,7 +134,7 @@
                                     <td class="p-4">
                                         <a href="{{ route('organizer_request.show', $request->id) }}"
                                             class="text-blue-600 hover:underline">
-                                            Bekijken
+                                            View
                                         </a>
                                     </td>
 
@@ -152,11 +152,11 @@
                     </div>
 
                     <h2 class="text-2xl font-bold text-slate-900 mb-2">
-                        Geen aanvragen gevonden
+                        No organizer requests yet
                     </h2>
 
                     <p class="text-slate-500 max-w-md">
-                        Er zijn momenteel nog geen organisator aanvragen binnengekomen.
+                        There are currently no organizer requests incoming.
                     </p>
                 </div>
 

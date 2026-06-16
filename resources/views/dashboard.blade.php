@@ -52,8 +52,8 @@
         <!-- MIJN TICKETS LIJST -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
             <div class="p-5 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-                <h3 class="font-bold text-gray-800 dark:text-gray-100">{{ __('Mijn Aankomende Evenementen') }}</h3>
-                <a href="#" class="text-blue-500 text-xs font-bold uppercase hover:underline">{{ __('Bekijk alles') }}</a>
+                <h3 class="font-bold text-gray-800 dark:text-gray-100">{{ __('My Upcoming Events') }}</h3>
+                <a href="#" class="text-blue-500 text-xs font-bold uppercase hover:underline">{{ __('View All') }}</a>
             </div>
             <div class="p-5">
                 <div class="space-y-4">
@@ -73,7 +73,7 @@
                             </div>
                         </div>
                     @empty
-                        <p class="text-center text-gray-500 py-4 italic">{{ __('Je hebt nog geen tickets.') }}</p>
+                        <p class="text-center text-gray-500 py-4 italic">{{ __('You have no tickets.') }}</p>
                     @endforelse
                 </div>
             </div>
@@ -82,7 +82,7 @@
         <!-- WACHTRIJ DETAIL LIJST -->
         <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
             <div class="p-5 border-b border-gray-100 dark:border-gray-700">
-                <h3 class="font-bold text-gray-800 dark:text-gray-100">{{ __('Wachtrij Posities') }}</h3>
+                <h3 class="font-bold text-gray-800 dark:text-gray-100">{{ __('Queue Positions') }}</h3>
             </div>
             <div class="p-5">
                 <div class="space-y-4">
@@ -91,7 +91,7 @@
                             <div class="flex justify-between items-center">
                                 <div>
                                     <h4 class="font-bold text-gray-900 dark:text-white text-sm">{{ $queue->event->name }}</h4>
-                                    <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-wider italic">In de rij sinds {{ $queue->created_at->diffForHumans() }}</p>
+                                    <p class="text-[10px] text-gray-400 mt-1 uppercase tracking-wider italic">In the queue since {{ $queue->created_at->diffForHumans() }}</p>
                                 </div>
                                 <div class="text-center bg-white dark:bg-gray-800 h-12 w-12 rounded-lg shadow-sm border border-gray-100 dark:border-gray-600 flex flex-col justify-center">
                                     <span class="text-[9px] text-gray-400 font-bold leading-none uppercase">Nr</span>
@@ -101,12 +101,12 @@
 
                             @if($queue->invited_at)
                                 <div class="mt-3 flex items-center justify-center p-2 bg-white dark:bg-gray-800 rounded-lg shadow-inner border border-orange-200 animate-pulse">
-                                    <span class="text-[10px] text-orange-600 font-black uppercase">{{ __('Nu beschikbaar! Check je e-mail.') }}</span>
+                                    <span class="text-[10px] text-orange-600 font-black uppercase">{{ __('Now available! Check your email.') }}</span>
                                 </div>
                             @endif
                         </div>
                     @empty
-                        <p class="text-center text-gray-500 py-4 italic">{{ __('Je staat momenteel niet in een wachtrij.') }}</p>
+                        <p class="text-center text-gray-500 py-4 italic">{{ __('You are not currently in a queue.') }}</p>
                     @endforelse
                 </div>
             </div>

@@ -27,7 +27,7 @@
                 <!-- Organisatienaam -->
                 <div>
                     <label class="block text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Organisatienaam
+                        Organization name
                     </label>
                     <input type="text" name="organization_name" value="{{ old('organization_name') }}"
                         class="w-full border border-slate-200 rounded-xl p-4 text-slate-950 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all"
@@ -37,7 +37,7 @@
                 <!-- Type Evenementen -->
                 <div>
                     <label class="block text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Wat voor evenementen organiseer je?
+              What kind of events do you organize?
                     </label>
                     <input type="text" name="event_type" value="{{ old('event_type') }}"
                         class="w-full border border-slate-200 rounded-xl p-4 text-slate-950 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all"
@@ -47,7 +47,7 @@
                 <!-- Website / Socials -->
                 <div>
                     <label class="block text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Website of social media
+                        Website or social media
                     </label>
                     <input type="url" name="website" value="{{ old('website') }}"
                         class="w-full border border-slate-200 rounded-xl p-4 text-slate-950 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all"
@@ -57,28 +57,28 @@
                 <!-- Ervaring -->
                 <div>
                     <label class="block text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Ervaring
+                        Experience
                     </label>
                     <textarea name="experience" rows="4"
                         class="w-full border border-slate-200 rounded-xl p-4 text-slate-950 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all resize-none"
-                        placeholder="Vertel kort iets over je ervaring.">{{ old('experience') }}</textarea>
+                        placeholder="Tell us a bit about your experience.">{{ old('experience') }}</textarea>
                 </div>
 
                 <!-- Motivatie -->
                 <div>
                     <label class="block text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Motivatie
+                        Motivation
                     </label>
                     <textarea name="motivation" rows="5"
                         class="w-full border border-slate-200 rounded-xl p-4 text-slate-950 placeholder-slate-400 focus:outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all resize-none"
-                        placeholder="Waarom wil je evenementen publiceren op het platform?" required>{{ old('motivation') }}</textarea>
+                        placeholder="Why do you want to list events on the platform?" required>{{ old('motivation') }}</textarea>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="pt-4">
                     <button type="submit"
                         class="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg shadow-blue-200 hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-300 transition-all text-center block">
-                        Aanvraag versturen
+                        Submit Request
                     </button>
                 </div>
             </form>

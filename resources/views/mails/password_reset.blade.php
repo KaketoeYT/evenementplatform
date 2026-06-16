@@ -2,16 +2,16 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>Wachtwoord resetten</title>
+    <title>Reset Password</title>
 </head>
 <body>
-    <p>Je ontvangt deze e-mail omdat er een verzoek is gedaan om je wachtwoord te resetten.</p>
-    <p>Klik op de knop hieronder om een nieuw wachtwoord in te stellen:</p>
-    <p><a href="{{ route('password.reset.manual') }}" style="display:inline-block;padding:10px 16px;background:#2d3748;color:#ffffff;text-decoration:none;border-radius:4px;">Reset wachtwoord</a></p>
-    <p>Als de knop niet werkt, gebruik dan de volgende link:</p>
+    <p>You are receiving this email because a password reset request has been made.</p>
+    <p>Click the button below to set a new password:</p>
+    <p><a href="{{ route('password.reset.manual') }}" style="display:inline-block;padding:10px 16px;background:#2d3748;color:#ffffff;text-decoration:none;border-radius:4px;">Reset Password</a></p>
+    <p>If the button doesn't work, use the following link:</p>
     <p><a href="{{ route('password.reset.manual') }}">{{ route('password.reset.manual') }}</a></p>
-    <p>Je e-mailadres: {{ $email }}</p>
+    <p>Your email address: {{ $email }}</p>
     <p>Token: <strong>{{ $token }}</strong></p>
-    <p>Als je dit niet hebt aangevraagd, kun je deze e-mail negeren.</p>
+    <p>If you did not request this, you can ignore this email.</p>
 </body>
 </html>

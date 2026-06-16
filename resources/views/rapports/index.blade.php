@@ -8,7 +8,7 @@
 
             <div class="bg-white rounded-xl shadow p-6 text-center border border-gray-100">
                 <p class="text-4xl font-bold text-indigo-600">{{ $totalEvents }}</p>
-                <p class="text-gray-500 mt-2 text-sm font-medium">Totaal evenementen</p>
+                <p class="text-gray-500 mt-2 text-sm font-medium">Total Events</p>
             </div>
 
         </div>
@@ -16,15 +16,15 @@
         {{-- FILTER (UI READY) --}}
         <div class="bg-white rounded-xl shadow p-6 border border-gray-100 flex justify-between items-center">
 
-            <h2 class="text-xl font-bold text-gray-800">Filter op periode</h2>
+            <h2 class="text-xl font-bold text-gray-800">Filter on period</h2>
 
             <form method="GET" class="flex gap-3 items-center">
 
                 <select name="period" class="border rounded px-3 py-2 text-sm">
-                    <option value="all" @selected(request('period') == 'all')>Alles</option>
-                    <option value="today" @selected(request('period') == 'today')>Vandaag</option>
-                    <option value="week" @selected(request('period') == 'week')>Deze week</option>
-                    <option value="month" @selected(request('period') == 'month')>Deze maand</option>
+                    <option value="all" @selected(request('period') == 'all')>All</option>
+                    <option value="today" @selected(request('period') == 'today')>Today</option>
+                    <option value="week" @selected(request('period') == 'week')>This week</option>
+                    <option value="month" @selected(request('period') == 'month')>This month</option>
                 </select>
 
                 <button type="submit"
@@ -39,10 +39,10 @@
         {{-- EVENTS BREAKDOWN --}}
         <div class="bg-white rounded-xl shadow p-6 border border-gray-100">
 
-            <h2 class="text-xl font-bold text-gray-800 mb-4">Events overzicht</h2>
+            <h2 class="text-xl font-bold text-gray-800 mb-4">Events Overview</h2>
 
             @if(empty($eventsPerMonth))
-                <p class="text-gray-400 text-sm">Geen data beschikbaar.</p>
+                <p class="text-gray-400 text-sm">No data available.</p>
             @else
                 <div class="space-y-3">
 

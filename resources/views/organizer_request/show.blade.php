@@ -12,11 +12,11 @@
             <div class="flex items-center justify-between mb-10">
                 <div>
                     <h1 class="text-3xl font-bold text-slate-900">
-                        Organisator Aanvraag
+                        Organizer Request
                     </h1>
 
                     <p class="text-slate-500 mt-2">
-                        Ingestuurd op
+                        Submitted on
                         {{ $request->created_at->format('d-m-Y H:i') }}
                     </p>
                 </div>
@@ -32,7 +32,7 @@
                 <!-- Organisatienaam -->
                 <div>
                     <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Organisatienaam
+                        Organization name
                     </h2>
 
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800">
@@ -43,7 +43,7 @@
                 <!-- Event Type -->
                 <div>
                     <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Type evenementen
+                        Type of events
                     </h2>
 
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800">
@@ -54,7 +54,7 @@
                 <!-- Website -->
                 <div>
                     <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Website / Social Media
+                        Website or social media
                     </h2>
 
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-4">
@@ -65,7 +65,7 @@
                             </a>
                         @else
                             <span class="text-slate-400">
-                                Niet ingevuld
+                                not provided
                             </span>
                         @endif
                     </div>
@@ -85,7 +85,7 @@
                 <!-- Motivatie -->
                 <div>
                     <h2 class="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">
-                        Motivatie
+                        Motivation
                     </h2>
 
                     <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-800 whitespace-pre-line">
@@ -102,17 +102,17 @@
                     @if ($request->status === 'approved')
                         <div
                             class="inline-flex items-center px-4 py-2 rounded-xl bg-emerald-100 text-emerald-700 font-semibold">
-                            Goedgekeurd
+                            granted
                         </div>
                     @elseif($request->status === 'rejected')
                         <div
                             class="inline-flex items-center px-4 py-2 rounded-xl bg-red-100 text-red-700 font-semibold">
-                            Afgewezen
+                            Rejected
                         </div>
                     @else
                         <div
                             class="inline-flex items-center px-4 py-2 rounded-xl bg-amber-100 text-amber-700 font-semibold">
-                            In behandeling
+                            In progress
                         </div>
                     @endif
                 </div>
@@ -127,7 +127,7 @@
 
                             <button type="submit"
                                 class="px-6 py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-200 transition-all">
-                                Goedkeuren & organizer maken
+                                Approve & Create Organizer
                             </button>
                         </form>
 
@@ -137,7 +137,7 @@
 
                             <button type="submit"
                                 class="px-6 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl shadow-lg shadow-red-200 transition-all">
-                                Afwijzen
+                                Reject
                             </button>
                         </form>
 
