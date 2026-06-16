@@ -16,8 +16,7 @@ return new class extends Migration
 
             $table->string('ticket_number')->unique();
             $table->string('rank');
-            $table->integer('price');
-
+            $table->decimal('price', 10, 2);
             $table->timestamps();
 
             // foreign keys
