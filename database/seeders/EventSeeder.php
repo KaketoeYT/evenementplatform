@@ -21,6 +21,7 @@ class EventSeeder extends Seeder
             'entry_price' => 99.99,
             'category_id' => 1,
             'venue_id' => 1,
+            'organizer_id' => 2,
         ]);
 
         Event::create([
@@ -31,6 +32,7 @@ class EventSeeder extends Seeder
             'entry_price' => 59.50,
             'category_id' => 2,
             'venue_id' => 2,
+            'organizer_id' => 2,
         ]);
 
         Event::create([
@@ -41,6 +43,7 @@ class EventSeeder extends Seeder
             'entry_price' => 25.00,
             'category_id' => 3,
             'venue_id' => 3,
+            'organizer_id' => 2,
         ]);
     }
 }

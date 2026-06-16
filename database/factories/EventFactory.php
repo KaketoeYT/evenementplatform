@@ -29,6 +29,7 @@ class EventFactory extends Factory
             'entry_price' => fake()->randomFloat(2, 10, 120),
             'category_id' => fake()->numberBetween(1, 3),
             'venue_id' => fake()->numberBetween(1, 3),
+            'organizer_id' => fake()->numberBetween(2, 3),
         ];
     }
 }

@@ -74,4 +74,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Application::class);
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'organizer_id');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
 }

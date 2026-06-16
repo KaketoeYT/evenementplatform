@@ -177,11 +177,11 @@
             @auth
                 @if (auth()->user()->role === 'organizer')
                     <li>
-                        <a href="{{ route('events.create') }}" class="cta">+ Event</a>
+                        <a href="{{ route('admin.events.index') }}" class="cta">Event</a>
                     </li>
 
                     <li>
-                        <a href="{{ route('venues.create') }}" class="cta">+ Venue</a>
+                        <a href="{{ route('venues.create') }}" class="cta">Venue</a>
                     </li>
 
                         <li>
