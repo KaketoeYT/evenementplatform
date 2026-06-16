@@ -39,7 +39,6 @@ Route::middleware(['auth', 'check.role:admin'])->group(function () {
 });
 
 
-Route::post('/events/{event}/toggle-registration', [EventController::class, 'toggleRegistration'])->name('events.toggleRegistration');
 
 Route::get('mails/password_reset/{userId}', [Settings\ProfileController::class, 'sendPasswordResetMail'])->name('mails.password_reset');
 
