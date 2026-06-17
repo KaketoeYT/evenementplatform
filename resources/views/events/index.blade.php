@@ -51,7 +51,7 @@
 
                                     <button type="submit" class="btn btn-outline-danger"
                                         onclick="return confirm('Weet je zeker dat je je plek voor dit evenement wilt opgeven?')">
-                                       Sign off
+                                        Sign off
                                     </button>
                                 </form>
                     @endif
@@ -123,6 +123,12 @@
                 </div>
             </section>
         @endforeach
+
+        @auth
+            <div class="mt-4 text-center">
+                <a href="{{ route('eventrequests.create') }}" class="btn btn-link">Submit an event request</a>
+            </div>
+        @endauth
         </div>
     </body>
 

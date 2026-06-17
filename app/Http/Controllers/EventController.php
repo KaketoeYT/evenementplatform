@@ -125,6 +125,8 @@ public function store(EventStoreRequest $request)
 
         $event = Event::with('venue')->findOrFail($request->event_id);
 
+        dd();
+
         // Centrale registratie check
         if (!$event->canRegister()) {
 
@@ -149,6 +151,8 @@ public function store(EventStoreRequest $request)
         // 1. Zoek het evenement en de bijbehorende venue
         $event = Event::with('venue')->findOrFail($request->event_id);
 
+        $rank = $request->input('rank', 'standard'); // Standaard rank als er geen is opgegeven
+
         // 2. Tel hoeveel tickets er al zijn voor dit evenement
         $currentTicketsCount = $event->tickets()->count();
 
@@ -159,19 +163,8 @@ public function store(EventStoreRequest $request)
 
 
         // 2. Data opslaan in de database
-        $ticket = new Ticket();
-        $ticket->ticket_number = 'TKT-' . strtoupper(Str::random(8)); // Maakt een unieke code
-        $ticket->rank = $request->rank;
-        if ($ticket->rank === 'VIP') {
-            $ticket->price = $request->entry_price * 2;
-        } elseif ($ticket->rank === 'seated') {
-            $ticket->price = $request->entry_price * 0.75;
-        } else {
-            $ticket->price = $request->entry_price;
-        }
-        $ticket->event_id = $request->event_id;
-        $ticket->user_id = Auth::id(); // De ID van de ingelogde gebruiker
-        $ticket->save();
+        $ticket = $this->storeFinalTicket($event, Auth::id(), $rank);
+       
 
         //3. Mail sturen naar de gebruiker
         Mail::to(Auth::user()->email)->send(new NewTicketMail($ticket));
@@ -292,52 +285,77 @@ public function store(EventStoreRequest $request)
 
     public function claim($eventId, $userId)
     {
+
+        
         // 1. Haal het event op en tel de huidige tickets
-        $event = Event::withCount('tickets')->findOrFail($eventId);
+        $event = Event::withCount('tickets')->findOrFail($eventId); //kan 404 zijn
 
         // 2. Dubbele check: Is er nog wel plek? 
         // (Voor het geval iemand anders net het allerlaatste plekje heeft gepakt)
         if ($event->tickets_count >= $event->venue->capacity) {
             return redirect()->route('events.show', $eventId)
-                ->with('error', 'Helaas, de beschikbare plek is inmiddels al door iemand anders geclaimd.');
-        }
-
-        // 3. Maak het ticket aan voor de nieuwe eigenaar
-        Ticket::create([
-            'user_id' => $userId,
-            'event_id' => $eventId,
-            'ticket_number' => 'TKT-' . strtoupper(uniqid()), // Of hoe jij je nummers genereert
-            'rank' => 'Standard', // Of een andere default waarde
-            'price' => $event->entry_price, // Of een andere prijs logica
-        ]);
-
+            ->with('error', 'Helaas, de beschikbare plek is inmiddels al door iemand anders geclaimd.');
+            }
+            
+            // 3. Maak het ticket aan voor de nieuwe eigenaar
+            $this->ticketstore(new Request([
+                'event' => $event,
+                'rank' => 'standard', // Of je kunt dit dynamisch maken als je verschillende rangen hebt
+                'entry_price' => $event->entry_price, // Zorg dat je de prijs van het event meeneemt
+                ]));
+                
+              
         // 4. Verwijder de gebruiker uit de wachtrij
         // Ze hebben nu immers een ticket, dus ze hoeven niet meer te wachten.
-        Queues::where('event_id', $eventId)
+        Queues::where('event_id', $event->id)
             ->where('user_id', $userId)
             ->delete();
 
         return redirect()->route('events.show', $eventId)
             ->with('success', 'Gefeliciteerd! Je hebt je ticket succesvol geclaimd.');
     }
+
+    private function storeFinalTicket($event, $userId, $rank)
+    {
+
     
-            public function mijntickets()
-            {
-                // Haal de ingelogde gebruiker op met al zijn gekoppelde events
-                $user = Auth::user();
-                
-                $events = Event::whereHas('tickets', function ($query) {
-                    $query->where('user_id', auth()->id());
-                })
-                ->orderBy('datetime', 'asc')
-                ->get();
-                // $events = $user->tickets()->with('event')->orderBy('event.datetime', 'asc')->get();
+        $ticket = Ticket::create([
+            'user_id' => $userId,
+            'event_id' => $event->id,
+            'ticket_number' => 'TKT-' . strtoupper(uniqid()), // Of hoe jij je nummers genereert
+            'rank' => $rank,
+            'price' => $event->entry_price, // Of een andere prijs logica
+        ]);
+        // Stel prijs in op basis van rank (case-insensitieve vergelijking)
+        $rankLower = strtolower($ticket->rank ?? '');
+        if ($rankLower === 'vip') {
+            $ticket->price = $event->entry_price * 2;
+        } elseif ($rankLower === 'seated') {
+            $ticket->price = $event->entry_price * 0.75;
+        } else {
+            $ticket->price = $event->entry_price;
+        }
+        $ticket->save();
+        return $ticket;
+    }
+    
+    public function mijntickets()
+    {
+        // Haal de ingelogde gebruiker op met al zijn gekoppelde events
+        $user = Auth::user();
+        
+        $events = Event::whereHas('tickets', function ($query) {
+            $query->where('user_id', auth()->id());
+        })
+        ->orderBy('datetime', 'asc')
+        ->get();
+        // $events = $user->tickets()->with('event')->orderBy('event.datetime', 'asc')->get();
 
-          
+    
 
-                // Stuur de events naar de Blade-view
-                return view('events.myevents', compact('events'));
-            }
+        // Stuur de events naar de Blade-view
+        return view('events.myevents', compact('events'));
+    }
 
 }
         
