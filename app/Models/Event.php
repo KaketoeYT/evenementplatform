@@ -50,7 +50,7 @@ class Event extends Model
 
     public function organizer()
     {
-        return $this->belongsTo(User::class, 'organizer_id');
+        return $this->belongsTo(User::class);
     }
 
     public function canRegister()
@@ -72,4 +72,5 @@ class Event extends Model
 
         return true;
     }
+
 }

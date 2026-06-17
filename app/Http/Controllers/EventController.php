@@ -89,35 +89,43 @@ class EventController extends Controller
         return view('events.create', compact('categories', 'venues'));
     }
 
-public function store(EventStoreRequest $request)
-{
-    // 1. Haal alle goedgekeurde tekstvelden op
-    $data = $request->validated();
+    public function store(EventStoreRequest $request)
+    {
+        $data = $request->validated();
 
-    // 2. Kijk RECHTSTREEKS in het request (omzeil de validatie-filter voor het bestand)
-    if ($request->hasFile('image')) {
-        // Sla de afbeelding op in de map 'storage/app/public/event_images'
-        $path = $request->file('image')->store('event_images', 'public');
-        
-        // Voeg het gegenereerde pad handmatig toe aan de data-array
-        $data['image_url'] = $path;
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('event_images', 'public');
+            $data['image_url'] = $path;
+        }
+
+        // Voeg deze regel toe
+        $data['organizer_id'] = Auth::id();
+
+        Event::create($data);
+
+        return redirect()->route('events.index')
+            ->with('success', 'Event created successfully.');
     }
-
-    // 3. Maak het event aan in de database
-    Event::create($data);
-
-    return redirect()->route('events.index')->with('success', 'Event created successfully.');
-}
 
     public function edit(Event $event)
     {
-        $categories = Category::all();
-        $venues = Venue::all();
-        return view('events.edit', compact('event', 'venues', 'categories'));
+
+       
+        if ($event->organizer_id !== Auth::id()) {
+            abort(403);
+        }
+
+            $categories = Category::all();
+            $venues = Venue::all();
+            return view('events.edit', compact('event', 'venues', 'categories'));
     }
 
     public function update(EventUpdateRequest $request, Event $event)
     {
+        if ($event->organizer_id !== Auth::id()) {
+            abort(403);
+        }
+
         $event->update($request->validated());
 
         return redirect()->route('events.index')->with('success', 'Event updated successfully.');
@@ -125,6 +133,10 @@ public function store(EventStoreRequest $request)
 
     public function destroy(Event $event)
     {
+
+        if ($event->organizer_id !== Auth::id()) {
+            abort(403);
+        }
         $event->delete();
 
         return redirect()->route('events.index')->with('success', 'Event deleted successfully.');
@@ -330,24 +342,22 @@ public function store(EventStoreRequest $request)
         return redirect()->route('events.show', $eventId)
             ->with('success', 'Gefeliciteerd! Je hebt je ticket succesvol geclaimd.');
     }
-    
-            public function mijntickets()
-            {
-                // Haal de ingelogde gebruiker op met al zijn gekoppelde events
-                $user = Auth::user();
-                
-                $events = Event::whereHas('tickets', function ($query) {
-                    $query->where('user_id', auth()->id());
-                })
-                ->orderBy('datetime', 'asc')
-                ->get();
-                // $events = $user->tickets()->with('event')->orderBy('event.datetime', 'asc')->get();
 
-          
+    public function mijntickets()
+    {
+        // Haal de ingelogde gebruiker op met al zijn gekoppelde events
+        $user = Auth::user();
 
-                // Stuur de events naar de Blade-view
-                return view('events.myevents', compact('events'));
-            }
+        $events = Event::whereHas('tickets', function ($query) {
+            $query->where('user_id', auth()->id());
+        })
+            ->orderBy('datetime', 'asc')
+            ->get();
+        // $events = $user->tickets()->with('event')->orderBy('event.datetime', 'asc')->get();
 
+
+
+        // Stuur de events naar de Blade-view
+        return view('events.myevents', compact('events'));
+    }
 }
-        
