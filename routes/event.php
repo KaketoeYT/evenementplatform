@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 
 // Routes ONLY for user user.
@@ -15,14 +16,14 @@ Route::middleware(['auth', 'check.role:admin,organizer'])->group(function () {
 
 // Routes for every inlogged user.
 Route::middleware(['auth'])->group(function () {
-    Route::post('/tickets/reserveer', [EventController::class, 'ticketstore'])->name('tickets.ticketstore');
-    Route::post('/event/afmelden', [EventController::class, 'afmelden'])->name('event.afmelden');
-    Route::post('/event/{event}/favorite', [EventController::class, 'favorite'])->name('event.favorite');
-    Route::post('/events/{event}/queue', [EventController::class, 'joinQueue'])->name('event.queue')->middleware('auth');
-    Route::get('/mijn-tickets', [EventController::class, 'mijntickets'])->name('tickets.mijntickets');
-    Route::get('/claim-ticket/{event}/{user}', [EventController::class, 'claim'])
-    ->name('event.claim')
-    ->middleware('signed');
+    Route::post('/tickets/reserveer', [TicketController::class, 'store'])->name('tickets.ticketstore');
+    Route::post('/event/afmelden', [TicketController::class, 'cancel'])->name('event.afmelden');
+    Route::post('/event/{event}/favorite', [TicketController::class, 'favorite'])->name('event.favorite');
+    Route::post('/events/{event}/queue', [TicketController::class, 'joinQueue'])->name('event.queue')->middleware('auth');
+    Route::get('/mijn-tickets', [TicketController::class, 'mijntickets'])->name('tickets.mijntickets');
+    Route::get('/claim-ticket/{event}/{user}', [TicketController::class, 'claim'])
+        ->name('event.claim')
+        ->middleware('signed');
 });
 
 // Routes ONLY for organizer user.
