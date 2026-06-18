@@ -110,7 +110,7 @@ class DeelnemerTest extends TestCase
             'entry_price' => $event->entry_price,
         ]);
 
-        Mail::assertSent(NewTicketMail::class, fn($mail) => $mail->hasTo($user->email));
+        Mail::assertSent(NewTicketMail::class, fn ($mail) => $mail->hasTo($user->email));
     }
 
     #[Test]
@@ -142,6 +142,31 @@ class DeelnemerTest extends TestCase
 
         $response->assertSessionHas('error');
         $this->assertDatabaseMissing('tickets', ['event_id' => $event->id, 'user_id' => $user->id]);
+    }
+
+    #[Test]
+    public function deelnemer_kan_niet_dubbel_boeken_voor_zelfde_evenement(): void
+    {
+        Mail::fake();
+        $user = $this->makeUser();
+        $event = $this->createEvent();
+
+        Ticket::create([
+            'ticket_number' => 'TKT-DUBBEL01',
+            'rank' => 'Standaard',
+            'price' => 10,
+            'event_id' => $event->id,
+            'user_id' => $user->id,
+        ]);
+
+        $response = $this->actingAs($user)->post(route('tickets.ticketstore'), [
+            'event_id' => $event->id,
+            'rank' => 'Standaard',
+            'entry_price' => $event->entry_price,
+        ]);
+
+        $response->assertSessionHas('error');
+        $this->assertDatabaseCount('tickets', 1);
     }
 
     #[Test]

@@ -10,6 +10,7 @@ use App\Models\Queues;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Str;
@@ -20,56 +21,60 @@ class TicketController extends Controller
     {
         $event = Event::with('venue')->findOrFail($request->event_id);
 
-        // Centrale registratie check
-        if (! $event->canRegister()) {
-            if ($event->registration_closed) {
-                return back()->with('error', 'Aanmelding gesloten');
-            }
-
-            if (now()->isAfter($event->datetime)) {
-                return back()->with('error', 'Het evenement is al begonnen.');
-            }
-
-            if ($event->tickets()->count() >= $event->venue->capacity) {
-                return back()->with('error', 'Helaas, dit evenement is uitverkocht!');
-            }
+        // Checks die geen vergrendeling nodig hebben kunnen we meteen afhandelen.
+        if ($event->registration_closed) {
+            return back()->with('error', 'Aanmelding gesloten');
         }
 
-        // bestaande capaciteit check
-        if ($event->tickets()->count() >= $event->venue->capacity) {
-            return back()->with('error', 'Helaas, dit evenement is uitverkocht!');
+        if (now()->isAfter($event->datetime)) {
+            return back()->with('error', 'Het evenement is al begonnen.');
         }
 
-        // 1. Zoek het evenement en de bijbehorende venue
-        $event = Event::with('venue')->findOrFail($request->event_id);
+        try {
+            $ticket = DB::transaction(function () use ($request) {
+                // Vergrendel de event-rij. Gelijktijdige aanmeldingen wachten nu op
+                // elkaar, zodat de capaciteitscheck en het aanmaken van het ticket
+                // atomair gebeuren en de laatste plek nooit dubbel wordt verkocht.
+                $event = Event::with('venue')
+                    ->lockForUpdate()
+                    ->findOrFail($request->event_id);
 
-        // 2. Tel hoeveel tickets er al zijn voor dit evenement
-        $currentTicketsCount = $event->tickets()->count();
+                // Voorkom dat dezelfde gebruiker dubbel boekt voor dit evenement.
+                $alreadyBooked = $event->tickets()
+                    ->where('user_id', Auth::id())
+                    ->exists();
 
-        // 3. Check of er nog plek is
-        if ($currentTicketsCount >= $event->venue->capacity) {
-            return redirect()->back()->with('error', 'Helaas, dit evenement is uitverkocht!');
+                if ($alreadyBooked) {
+                    throw new \RuntimeException('Je hebt al een ticket voor dit evenement.');
+                }
+
+                if ($event->tickets()->count() >= $event->venue->capacity) {
+                    throw new \RuntimeException('Helaas, dit evenement is uitverkocht!');
+                }
+
+                $ticket = new Ticket;
+                $ticket->ticket_number = 'TKT-'.strtoupper(Str::random(8)); // Maakt een unieke code
+                $ticket->rank = $request->rank;
+                if ($ticket->rank === 'VIP') {
+                    $ticket->price = $request->entry_price * 2;
+                } elseif ($ticket->rank === 'seated') {
+                    $ticket->price = $request->entry_price * 0.75;
+                } else {
+                    $ticket->price = $request->entry_price;
+                }
+                $ticket->event_id = $request->event_id;
+                $ticket->user_id = Auth::id(); // De ID van de ingelogde gebruiker
+                $ticket->save();
+
+                return $ticket;
+            });
+        } catch (\RuntimeException $e) {
+            return back()->with('error', $e->getMessage());
         }
 
-        // 2. Data opslaan in de database
-        $ticket = new Ticket;
-        $ticket->ticket_number = 'TKT-'.strtoupper(Str::random(8)); // Maakt een unieke code
-        $ticket->rank = $request->rank;
-        if ($ticket->rank === 'VIP') {
-            $ticket->price = $request->entry_price * 2;
-        } elseif ($ticket->rank === 'seated') {
-            $ticket->price = $request->entry_price * 0.75;
-        } else {
-            $ticket->price = $request->entry_price;
-        }
-        $ticket->event_id = $request->event_id;
-        $ticket->user_id = Auth::id(); // De ID van de ingelogde gebruiker
-        $ticket->save();
-
-        // 3. Mail sturen naar de gebruiker
+        // Mail pas versturen nadat de transactie succesvol is afgerond.
         Mail::to(Auth::user()->email)->send(new NewTicketMail($ticket));
 
-        // 4. Terugsturen met een succesmelding
         return redirect()->back()->with('success', 'Je plek is gereserveerd! Ticket: '.$ticket->ticket_number);
     }
 
