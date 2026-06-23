@@ -5,11 +5,11 @@
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-10">
             <div>
                 <h1 class="text-4xl font-black text-slate-950 tracking-tight">
-                    Eventaanvragen
+                    Event Requests
                 </h1>
 
                 <p class="text-slate-500 mt-2 text-lg">
-                    Overzicht van alle binnengekomen event aanvragen.
+                    overview of all requests
                 </p>
             </div>
         </div>
@@ -33,27 +33,27 @@
                             <tr>
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Naam
+                                    Name
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Omschrijving
+                                    Description
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Gebruiker
+                                    User
                                 </th>
 
                                 <th
                                     class="text-left px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Locatie
+                                    Location
                                 </th>
 
                                 <th
                                     class="text-right px-6 py-5 text-xs font-black uppercase tracking-widest text-slate-500">
-                                    Acties
+                                    Actions
                                 </th>
                             </tr>
                         </thead>
@@ -92,7 +92,7 @@
                                         <div class="flex items-center justify-end gap-3">
                                             <a href="{{ route('eventrequests.show', $request->id) }}"
                                                 class="text-blue-600 hover:underline font-medium">
-                                                Bekijken
+                                             view
                                             </a>
 
                                             <form method="POST" action="{{ route('eventrequests.destroy', $request) }}"
@@ -102,7 +102,7 @@
 
                                                 <button type="submit"
                                                     class="px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 font-semibold transition-all">
-                                                    Verwijderen
+                                                    delete
                                                 </button>
                                             </form>
                                         </div>
@@ -121,11 +121,11 @@
                     </div>
 
                     <h2 class="text-2xl font-bold text-slate-900 mb-2">
-                        Geen aanvragen gevonden
+                        No requests yet
                     </h2>
 
                     <p class="text-slate-500 max-w-md">
-                        Er zijn momenteel nog geen event aanvragen binnengekomen.
+                    There are no request at the moment.
                     </p>
                 </div>
 

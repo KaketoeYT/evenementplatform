@@ -82,11 +82,11 @@
         <header class="mb-4 d-flex justify-content-between align-items-end">
             <div>
                 <h1 class="fw-bold h3 mb-1">Event Management</h1>
-                <p class="text-muted small mb-0">Beheer alle evenementen, ticketprijzen en aanmeldingen.</p>
+                <p class="text-muted small mb-0">Manage all events, ticket prices and registrations.</p>
             </div>
             <a href="{{ route('events.create') }}" class="btn btn-primary px-4 fw-bold"
                 style="background-color: #026cdf; border: none;">
-                + Nieuw Event
+                + New Event
             </a>
         </header>
 
@@ -97,10 +97,10 @@
                         <tr>
                             <th>ID</th>
                             <th>Event Details</th>
-                            <th>Locatie & Categorie</th>
-                            <th>Prijs</th>
+                            <th>Location & Category</th>
+                            <th>Price</th>
                             <th>Status</th>
-                            <th>Acties</th>
+                            <th>Actions</th>
                             <th>Timestamps</th>
                         </tr>
                     </thead>
@@ -128,20 +128,20 @@
                                         @csrf
                                         <button type="submit"
                                             class="status-badge {{ $event->registration_closed ? 'bg-danger text-white' : 'bg-success text-white' }}">
-                                            {{ $event->registration_closed ? 'Gesloten' : 'Open' }}
+                                            {{ $event->registration_closed ? 'Closed' : 'Open' }}
                                         </button>
                                     </form>
                                 </td>
                                 <td>
                                     <div class="d-flex flex-column gap-1">
                                         <a href="{{ route('events.edit', $event->id) }}"
-                                            class="btn-action btn-edit">Bewerk</a>
+                                            class="btn-action btn-edit">Edit</a>
 
                                         <form action="{{ route('events.destroy', $event->id) }}" method="POST"
-                                            onsubmit="return confirm('Verwijderen?');">
+                                            onsubmit="return confirm('Delete?');">
                                             @csrf @method('DELETE')
                                             <button type="submit"
-                                                class="btn-action p-0 border-0 bg-transparent text-danger">Verwijder</button>
+                                                class="btn-action p-0 border-0 bg-transparent text-danger">Delete</button>
                                         </form>
                                     </div>
                                 </td>

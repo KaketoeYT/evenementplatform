@@ -40,13 +40,13 @@ class TicketController extends Controller
                     ->findOrFail($request->event_id);
 
                 // Voorkom dat dezelfde gebruiker dubbel boekt voor dit evenement.
-                $alreadyBooked = $event->tickets()
-                    ->where('user_id', Auth::id())
-                    ->exists();
+                // $alreadyBooked = $event->tickets()
+                //     ->where('user_id', Auth::id())
+                //     ->exists();
 
-                if ($alreadyBooked) {
-                    throw new \RuntimeException('Je hebt al een ticket voor dit evenement.');
-                }
+                // if ($alreadyBooked) {
+                //     throw new \RuntimeException('Je hebt al een ticket voor dit evenement.');
+                // }
 
                 if ($event->tickets()->count() >= $event->venue->capacity) {
                     throw new \RuntimeException('Helaas, dit evenement is uitverkocht!');
